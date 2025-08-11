@@ -1,0 +1,974 @@
+nohup: ignoring input
++ project_name=MATH
++ exp_name=DAPO-Qwen2.5-VL-3B
++ ckp_name=DAPO-Qwen2.5-VL-Math
++ export WANDB_API_KEY=09395dec0812221d976e6fc6c165ba95070ed686
++ WANDB_API_KEY=09395dec0812221d976e6fc6c165ba95070ed686
++ adv_estimator=grpo
++ use_kl_in_reward=False
++ kl_coef=0.0
++ use_kl_loss=False
++ kl_loss_coef=0.0
++ clip_ratio_low=0.2
++ clip_ratio_high=0.28
++ max_prompt_length=1024
++ max_response_length=4096
++ enable_overlong_buffer=True
++ overlong_buffer_len=1024
++ overlong_penalty_factor=1.0
++ loss_agg_mode=token-mean
++ enable_filter_groups=True
++ filter_groups_metric=acc
++ max_num_gen_batches=10
++ train_prompt_bsz=32
++ gen_prompt_bsz=96
++ n_resp_per_prompt=8
++ train_prompt_mini_bsz=16
++ NNODES=1
++ MODEL_PATH=/gemini/platform/public/NLP/private/zhaiyanbo/model/Qwen2.5-VL-3B-Instruct
++ CKPTS_DIR=/gemini/platform/public/NLP/private/project_model/math/ckpts/DAPO-Qwen2.5-VL-Math
++ TRAIN_FILE=/gemini/user/private/table_reasoning/zhaiyanbo/verl/data/rl_data/train.parquet
++ TEST_FILE=/gemini/user/private/table_reasoning/zhaiyanbo/verl/data/rl_data/test.parquet
++ temperature=1.0
++ top_p=1.0
++ top_k=-1
++ val_top_p=0.7
++ sp_size=8
++ use_dynamic_bsz=True
++ actor_ppo_max_token_len=5120
++ infer_ppo_max_token_len=5120
++ offload=True
++ gen_tp=4
++ python3 -m recipe.dapo.main_dapo data.train_files=/gemini/user/private/table_reasoning/zhaiyanbo/verl/data/rl_data/train.parquet data.val_files=/gemini/user/private/table_reasoning/zhaiyanbo/verl/data/rl_data/test.parquet data.prompt_key=prompt data.filter_overlong_prompts=True data.truncation=error data.image_key=images data.return_multi_modal_inputs=True data.max_prompt_length=1024 data.max_response_length=4096 data.gen_batch_size=96 data.train_batch_size=32 actor_rollout_ref.rollout.n=8 algorithm.adv_estimator=grpo algorithm.use_kl_in_reward=False algorithm.kl_ctrl.kl_coef=0.0 actor_rollout_ref.actor.use_kl_loss=False actor_rollout_ref.actor.kl_loss_coef=0.0 actor_rollout_ref.actor.clip_ratio_low=0.2 actor_rollout_ref.actor.clip_ratio_high=0.28 actor_rollout_ref.actor.clip_ratio_c=10.0 algorithm.filter_groups.enable=True algorithm.filter_groups.max_num_gen_batches=10 algorithm.filter_groups.metric=acc actor_rollout_ref.model.use_remove_padding=True actor_rollout_ref.actor.use_dynamic_bsz=True actor_rollout_ref.ref.log_prob_use_dynamic_bsz=True actor_rollout_ref.rollout.log_prob_use_dynamic_bsz=True actor_rollout_ref.actor.ppo_max_token_len_per_gpu=5120 actor_rollout_ref.ref.log_prob_max_token_len_per_gpu=5120 actor_rollout_ref.rollout.log_prob_max_token_len_per_gpu=5120 actor_rollout_ref.model.path=/gemini/platform/public/NLP/private/zhaiyanbo/model/Qwen2.5-VL-3B-Instruct actor_rollout_ref.model.enable_gradient_checkpointing=True actor_rollout_ref.actor.optim.lr=1e-6 actor_rollout_ref.actor.optim.lr_warmup_steps=10 actor_rollout_ref.actor.optim.weight_decay=0.1 actor_rollout_ref.actor.ppo_mini_batch_size=16 actor_rollout_ref.actor.fsdp_config.param_offload=True actor_rollout_ref.actor.fsdp_config.optimizer_offload=True actor_rollout_ref.actor.entropy_coeff=0 actor_rollout_ref.actor.grad_clip=1.0 actor_rollout_ref.actor.loss_agg_mode=token-mean actor_rollout_ref.actor.ulysses_sequence_parallel_size=8 actor_rollout_ref.rollout.gpu_memory_utilization=0.80 actor_rollout_ref.rollout.tensor_model_parallel_size=4 actor_rollout_ref.rollout.enable_chunked_prefill=True actor_rollout_ref.rollout.max_num_batched_tokens=5120 actor_rollout_ref.rollout.temperature=1.0 actor_rollout_ref.rollout.top_p=1.0 actor_rollout_ref.rollout.top_k=-1 actor_rollout_ref.rollout.val_kwargs.temperature=1.0 actor_rollout_ref.rollout.val_kwargs.top_p=0.7 actor_rollout_ref.rollout.val_kwargs.top_k=-1 actor_rollout_ref.rollout.val_kwargs.do_sample=True actor_rollout_ref.rollout.val_kwargs.n=1 actor_rollout_ref.rollout.name=vllm actor_rollout_ref.ref.fsdp_config.param_offload=True actor_rollout_ref.ref.ulysses_sequence_parallel_size=8 actor_rollout_ref.actor.fsdp_config.fsdp_size=-1 reward_model.reward_manager=dapo reward_model.overlong_buffer.enable=True reward_model.overlong_buffer.len=1024 reward_model.overlong_buffer.penalty_factor=1.0 'trainer.logger=["console","wandb"]' trainer.project_name=MATH trainer.experiment_name=DAPO-Qwen2.5-VL-3B trainer.n_gpus_per_node=8 trainer.nnodes=1 trainer.val_before_train=True trainer.test_freq=10 trainer.save_freq=10 trainer.total_epochs=10 trainer.default_local_dir=/gemini/platform/public/NLP/private/project_model/math/ckpts/DAPO-Qwen2.5-VL-Math trainer.resume_mode=auto
+2025-08-07 23:46:53,823	INFO worker.py:1879 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+[36m(TaskRunner pid=2985779)[0m TaskRunner hostname: c9b4e48bcef9567f98037c541e0f5862-taskrole1-0, PID: 2985779
+[36m(TaskRunner pid=2985779)[0m {'actor_rollout_ref': {'actor': {'_target_': 'verl.workers.config.FSDPActorConfig',
+[36m(TaskRunner pid=2985779)[0m                                  'checkpoint': {'_target_': 'verl.trainer.config.CheckpointConfig',
+[36m(TaskRunner pid=2985779)[0m                                                 'async_save': False,
+[36m(TaskRunner pid=2985779)[0m                                                 'load_contents': ['model',
+[36m(TaskRunner pid=2985779)[0m                                                                   'optimizer',
+[36m(TaskRunner pid=2985779)[0m                                                                   'extra'],
+[36m(TaskRunner pid=2985779)[0m                                                 'save_contents': ['model',
+[36m(TaskRunner pid=2985779)[0m                                                                   'optimizer',
+[36m(TaskRunner pid=2985779)[0m                                                                   'extra']},
+[36m(TaskRunner pid=2985779)[0m                                  'clip_ratio': 0.2,
+[36m(TaskRunner pid=2985779)[0m                                  'clip_ratio_c': 10.0,
+[36m(TaskRunner pid=2985779)[0m                                  'clip_ratio_high': 0.28,
+[36m(TaskRunner pid=2985779)[0m                                  'clip_ratio_low': 0.2,
+[36m(TaskRunner pid=2985779)[0m                                  'entropy_checkpointing': False,
+[36m(TaskRunner pid=2985779)[0m                                  'entropy_coeff': 0,
+[36m(TaskRunner pid=2985779)[0m                                  'entropy_from_logits_with_chunking': False,
+[36m(TaskRunner pid=2985779)[0m                                  'fsdp_config': {'_target_': 'verl.workers.config.FSDPEngineConfig',
+[36m(TaskRunner pid=2985779)[0m                                                  'forward_prefetch': False,
+[36m(TaskRunner pid=2985779)[0m                                                  'fsdp_size': -1,
+[36m(TaskRunner pid=2985779)[0m                                                  'offload_policy': False,
+[36m(TaskRunner pid=2985779)[0m                                                  'optimizer_offload': True,
+[36m(TaskRunner pid=2985779)[0m                                                  'param_offload': True,
+[36m(TaskRunner pid=2985779)[0m                                                  'reshard_after_forward': True,
+[36m(TaskRunner pid=2985779)[0m                                                  'wrap_policy': {'min_num_params': 0}},
+[36m(TaskRunner pid=2985779)[0m                                  'grad_clip': 1.0,
+[36m(TaskRunner pid=2985779)[0m                                  'kl_loss_coef': 0.0,
+[36m(TaskRunner pid=2985779)[0m                                  'kl_loss_type': 'low_var_kl',
+[36m(TaskRunner pid=2985779)[0m                                  'loss_agg_mode': 'token-mean',
+[36m(TaskRunner pid=2985779)[0m                                  'optim': {'_target_': 'verl.workers.config.FSDPOptimizerConfig',
+[36m(TaskRunner pid=2985779)[0m                                            'lr': 1e-06,
+[36m(TaskRunner pid=2985779)[0m                                            'lr_warmup_steps': 10,
+[36m(TaskRunner pid=2985779)[0m                                            'lr_warmup_steps_ratio': 0.0,
+[36m(TaskRunner pid=2985779)[0m                                            'min_lr_ratio': 0.0,
+[36m(TaskRunner pid=2985779)[0m                                            'num_cycles': 0.5,
+[36m(TaskRunner pid=2985779)[0m                                            'total_training_steps': -1,
+[36m(TaskRunner pid=2985779)[0m                                            'warmup_style': 'constant',
+[36m(TaskRunner pid=2985779)[0m                                            'weight_decay': 0.1},
+[36m(TaskRunner pid=2985779)[0m                                  'policy_loss': {'_target_': 'verl.workers.config.PolicyLossConfig',
+[36m(TaskRunner pid=2985779)[0m                                                  'clip_cov_lb': 1.0,
+[36m(TaskRunner pid=2985779)[0m                                                  'clip_cov_ratio': 0.0002,
+[36m(TaskRunner pid=2985779)[0m                                                  'clip_cov_ub': 5.0,
+[36m(TaskRunner pid=2985779)[0m                                                  'kl_cov_ratio': 0.0002,
+[36m(TaskRunner pid=2985779)[0m                                                  'loss_mode': 'vanilla',
+[36m(TaskRunner pid=2985779)[0m                                                  'ppo_kl_coef': 0.1},
+[36m(TaskRunner pid=2985779)[0m                                  'ppo_epochs': 1,
+[36m(TaskRunner pid=2985779)[0m                                  'ppo_max_token_len_per_gpu': 5120,
+[36m(TaskRunner pid=2985779)[0m                                  'ppo_micro_batch_size': None,
+[36m(TaskRunner pid=2985779)[0m                                  'ppo_micro_batch_size_per_gpu': None,
+[36m(TaskRunner pid=2985779)[0m                                  'ppo_mini_batch_size': 16,
+[36m(TaskRunner pid=2985779)[0m                                  'shuffle': False,
+[36m(TaskRunner pid=2985779)[0m                                  'strategy': 'fsdp',
+[36m(TaskRunner pid=2985779)[0m                                  'ulysses_sequence_parallel_size': 8,
+[36m(TaskRunner pid=2985779)[0m                                  'use_dynamic_bsz': True,
+[36m(TaskRunner pid=2985779)[0m                                  'use_fused_kernels': False,
+[36m(TaskRunner pid=2985779)[0m                                  'use_kl_loss': False,
+[36m(TaskRunner pid=2985779)[0m                                  'use_remove_padding': True,
+[36m(TaskRunner pid=2985779)[0m                                  'use_torch_compile': True},
+[36m(TaskRunner pid=2985779)[0m                        'hybrid_engine': True,
+[36m(TaskRunner pid=2985779)[0m                        'model': {'custom_chat_template': None,
+[36m(TaskRunner pid=2985779)[0m                                  'enable_activation_offload': False,
+[36m(TaskRunner pid=2985779)[0m                                  'enable_gradient_checkpointing': True,
+[36m(TaskRunner pid=2985779)[0m                                  'exclude_modules': None,
+[36m(TaskRunner pid=2985779)[0m                                  'external_lib': None,
+[36m(TaskRunner pid=2985779)[0m                                  'fused_kernel_options': {'impl_backend': 'torch'},
+[36m(TaskRunner pid=2985779)[0m                                  'lora_alpha': 16,
+[36m(TaskRunner pid=2985779)[0m                                  'lora_rank': 0,
+[36m(TaskRunner pid=2985779)[0m                                  'override_config': {},
+[36m(TaskRunner pid=2985779)[0m                                  'path': '/gemini/platform/public/NLP/private/zhaiyanbo/model/Qwen2.5-VL-3B-Instruct',
+[36m(TaskRunner pid=2985779)[0m                                  'target_modules': 'all-linear',
+[36m(TaskRunner pid=2985779)[0m                                  'trust_remote_code': False,
+[36m(TaskRunner pid=2985779)[0m                                  'use_fused_kernels': False,
+[36m(TaskRunner pid=2985779)[0m                                  'use_liger': False,
+[36m(TaskRunner pid=2985779)[0m                                  'use_remove_padding': True,
+[36m(TaskRunner pid=2985779)[0m                                  'use_shm': False},
+[36m(TaskRunner pid=2985779)[0m                        'profiler': {'_target_': 'verl.utils.profiler.ProfilerConfig',
+[36m(TaskRunner pid=2985779)[0m                                     'all_ranks': False,
+[36m(TaskRunner pid=2985779)[0m                                     'discrete': False,
+[36m(TaskRunner pid=2985779)[0m                                     'ranks': []},
+[36m(TaskRunner pid=2985779)[0m                        'ref': {'entropy_checkpointing': False,
+[36m(TaskRunner pid=2985779)[0m                                'entropy_from_logits_with_chunking': False,
+[36m(TaskRunner pid=2985779)[0m                                'fsdp_config': {'_target_': 'verl.workers.config.FSDPEngineConfig',
+[36m(TaskRunner pid=2985779)[0m                                                'forward_prefetch': False,
+[36m(TaskRunner pid=2985779)[0m                                                'param_offload': True,
+[36m(TaskRunner pid=2985779)[0m                                                'reshard_after_forward': True,
+[36m(TaskRunner pid=2985779)[0m                                                'wrap_policy': {'min_num_params': 0}},
+[36m(TaskRunner pid=2985779)[0m                                'log_prob_max_token_len_per_gpu': 5120,
+[36m(TaskRunner pid=2985779)[0m                                'log_prob_micro_batch_size': None,
+[36m(TaskRunner pid=2985779)[0m                                'log_prob_micro_batch_size_per_gpu': None,
+[36m(TaskRunner pid=2985779)[0m                                'log_prob_use_dynamic_bsz': True,
+[36m(TaskRunner pid=2985779)[0m                                'strategy': 'fsdp',
+[36m(TaskRunner pid=2985779)[0m                                'ulysses_sequence_parallel_size': 8,
+[36m(TaskRunner pid=2985779)[0m                                'use_torch_compile': True},
+[36m(TaskRunner pid=2985779)[0m                        'rollout': {'agent': {'agent_loop_config_path': None,
+[36m(TaskRunner pid=2985779)[0m                                              'custom_async_server': {'name': None,
+[36m(TaskRunner pid=2985779)[0m                                                                      'path': None},
+[36m(TaskRunner pid=2985779)[0m                                              'num_workers': 8},
+[36m(TaskRunner pid=2985779)[0m                                    'calculate_log_probs': False,
+[36m(TaskRunner pid=2985779)[0m                                    'disable_log_stats': True,
+[36m(TaskRunner pid=2985779)[0m                                    'do_sample': True,
+[36m(TaskRunner pid=2985779)[0m                                    'dtype': 'bfloat16',
+[36m(TaskRunner pid=2985779)[0m                                    'enable_chunked_prefill': True,
+[36m(TaskRunner pid=2985779)[0m                                    'enforce_eager': True,
+[36m(TaskRunner pid=2985779)[0m                                    'engine_kwargs': {'sglang': {'attention_backend': None},
+[36m(TaskRunner pid=2985779)[0m                                                      'vllm': {'disable_mm_preprocessor_cache': False,
+[36m(TaskRunner pid=2985779)[0m                                                               'swap_space': None}},
+[36m(TaskRunner pid=2985779)[0m                                    'free_cache_engine': True,
+[36m(TaskRunner pid=2985779)[0m                                    'gpu_memory_utilization': 0.8,
+[36m(TaskRunner pid=2985779)[0m                                    'ignore_eos': False,
+[36m(TaskRunner pid=2985779)[0m                                    'layered_summon': False,
+[36m(TaskRunner pid=2985779)[0m                                    'load_format': 'dummy_dtensor',
+[36m(TaskRunner pid=2985779)[0m                                    'log_prob_max_token_len_per_gpu': 5120,
+[36m(TaskRunner pid=2985779)[0m                                    'log_prob_micro_batch_size': None,
+[36m(TaskRunner pid=2985779)[0m                                    'log_prob_micro_batch_size_per_gpu': None,
+[36m(TaskRunner pid=2985779)[0m                                    'log_prob_use_dynamic_bsz': True,
+[36m(TaskRunner pid=2985779)[0m                                    'max_model_len': None,
+[36m(TaskRunner pid=2985779)[0m                                    'max_num_batched_tokens': 5120,
+[36m(TaskRunner pid=2985779)[0m                                    'max_num_seqs': 1024,
+[36m(TaskRunner pid=2985779)[0m                                    'mode': 'sync',
+[36m(TaskRunner pid=2985779)[0m                                    'multi_stage_wake_up': False,
+[36m(TaskRunner pid=2985779)[0m                                    'multi_turn': {'enable': False,
+[36m(TaskRunner pid=2985779)[0m                                                   'format': 'hermes',
+[36m(TaskRunner pid=2985779)[0m                                                   'interaction_config_path': None,
+[36m(TaskRunner pid=2985779)[0m                                                   'max_assistant_turns': None,
+[36m(TaskRunner pid=2985779)[0m                                                   'max_parallel_calls': 1,
+[36m(TaskRunner pid=2985779)[0m                                                   'max_tool_response_length': 256,
+[36m(TaskRunner pid=2985779)[0m                                                   'max_user_turns': None,
+[36m(TaskRunner pid=2985779)[0m                                                   'tokenization_sanity_check_mode': 'strict',
+[36m(TaskRunner pid=2985779)[0m                                                   'tool_config_path': None,
+[36m(TaskRunner pid=2985779)[0m                                                   'tool_response_truncate_side': 'middle',
+[36m(TaskRunner pid=2985779)[0m                                                   'use_inference_chat_template': False},
+[36m(TaskRunner pid=2985779)[0m                                    'n': 8,
+[36m(TaskRunner pid=2985779)[0m                                    'name': 'vllm',
+[36m(TaskRunner pid=2985779)[0m                                    'prompt_length': 1024,
+[36m(TaskRunner pid=2985779)[0m                                    'response_length': 4096,
+[36m(TaskRunner pid=2985779)[0m                                    'temperature': 1.0,
+[36m(TaskRunner pid=2985779)[0m                                    'tensor_model_parallel_size': 4,
+[36m(TaskRunner pid=2985779)[0m                                    'top_k': -1,
+[36m(TaskRunner pid=2985779)[0m                                    'top_p': 1.0,
+[36m(TaskRunner pid=2985779)[0m                                    'trace': {'backend': None,
+[36m(TaskRunner pid=2985779)[0m                                              'token2text': False},
+[36m(TaskRunner pid=2985779)[0m                                    'update_weights_bucket_megabytes': 512,
+[36m(TaskRunner pid=2985779)[0m                                    'val_kwargs': {'do_sample': True,
+[36m(TaskRunner pid=2985779)[0m                                                   'n': 1,
+[36m(TaskRunner pid=2985779)[0m                                                   'temperature': 1.0,
+[36m(TaskRunner pid=2985779)[0m                                                   'top_k': -1,
+[36m(TaskRunner pid=2985779)[0m                                                   'top_p': 0.7}}},
+[36m(TaskRunner pid=2985779)[0m  'algorithm': {'_target_': 'verl.trainer.config.AlgoConfig',
+[36m(TaskRunner pid=2985779)[0m                'adv_estimator': 'grpo',
+[36m(TaskRunner pid=2985779)[0m                'filter_groups': {'_target_': 'verl.trainer.config.FilterGroupsConfig',
+[36m(TaskRunner pid=2985779)[0m                                  'enable': True,
+[36m(TaskRunner pid=2985779)[0m                                  'max_num_gen_batches': 10,
+[36m(TaskRunner pid=2985779)[0m                                  'metric': 'acc'},
+[36m(TaskRunner pid=2985779)[0m                'gamma': 1.0,
+[36m(TaskRunner pid=2985779)[0m                'kl_ctrl': {'_target_': 'verl.trainer.config.KLControlConfig',
+[36m(TaskRunner pid=2985779)[0m                            'horizon': 10000,
+[36m(TaskRunner pid=2985779)[0m                            'kl_coef': 0.0,
+[36m(TaskRunner pid=2985779)[0m                            'target_kl': 0.1,
+[36m(TaskRunner pid=2985779)[0m                            'type': 'fixed'},
+[36m(TaskRunner pid=2985779)[0m                'kl_penalty': 'kl',
+[36m(TaskRunner pid=2985779)[0m                'lam': 1.0,
+[36m(TaskRunner pid=2985779)[0m                'norm_adv_by_std_in_grpo': True,
+[36m(TaskRunner pid=2985779)[0m                'pf_ppo': {'reweight_method': 'pow', 'weight_pow': 2.0},
+[36m(TaskRunner pid=2985779)[0m                'use_kl_in_reward': False,
+[36m(TaskRunner pid=2985779)[0m                'use_pf_ppo': False},
+[36m(TaskRunner pid=2985779)[0m  'critic': {'_target_': 'verl.workers.config.FSDPCriticConfig',
+[36m(TaskRunner pid=2985779)[0m             'checkpoint': {'_target_': 'verl.trainer.config.CheckpointConfig',
+[36m(TaskRunner pid=2985779)[0m                            'async_save': False,
+[36m(TaskRunner pid=2985779)[0m                            'load_contents': ['model', 'optimizer', 'extra'],
+[36m(TaskRunner pid=2985779)[0m                            'save_contents': ['model', 'optimizer', 'extra']},
+[36m(TaskRunner pid=2985779)[0m             'cliprange_value': 0.5,
+[36m(TaskRunner pid=2985779)[0m             'enable': None,
+[36m(TaskRunner pid=2985779)[0m             'forward_max_token_len_per_gpu': 32768,
+[36m(TaskRunner pid=2985779)[0m             'forward_micro_batch_size': None,
+[36m(TaskRunner pid=2985779)[0m             'forward_micro_batch_size_per_gpu': None,
+[36m(TaskRunner pid=2985779)[0m             'grad_clip': 1.0,
+[36m(TaskRunner pid=2985779)[0m             'loss_agg_mode': 'token-mean',
+[36m(TaskRunner pid=2985779)[0m             'model': {'_target_': 'verl.workers.config.FSDPCriticModelCfg',
+[36m(TaskRunner pid=2985779)[0m                       'enable_activation_offload': False,
+[36m(TaskRunner pid=2985779)[0m                       'enable_gradient_checkpointing': True,
+[36m(TaskRunner pid=2985779)[0m                       'external_lib': None,
+[36m(TaskRunner pid=2985779)[0m                       'fsdp_config': {'_target_': 'verl.workers.config.FSDPEngineConfig',
+[36m(TaskRunner pid=2985779)[0m                                       'forward_prefetch': False,
+[36m(TaskRunner pid=2985779)[0m                                       'fsdp_size': -1,
+[36m(TaskRunner pid=2985779)[0m                                       'offload_policy': False,
+[36m(TaskRunner pid=2985779)[0m                                       'optimizer_offload': False,
+[36m(TaskRunner pid=2985779)[0m                                       'param_offload': False,
+[36m(TaskRunner pid=2985779)[0m                                       'reshard_after_forward': True,
+[36m(TaskRunner pid=2985779)[0m                                       'wrap_policy': {'min_num_params': 0}},
+[36m(TaskRunner pid=2985779)[0m                       'lora_alpha': 16,
+[36m(TaskRunner pid=2985779)[0m                       'lora_rank': 0,
+[36m(TaskRunner pid=2985779)[0m                       'override_config': {},
+[36m(TaskRunner pid=2985779)[0m                       'path': '~/models/deepseek-llm-7b-chat',
+[36m(TaskRunner pid=2985779)[0m                       'target_modules': 'all-linear',
+[36m(TaskRunner pid=2985779)[0m                       'tokenizer_path': '/gemini/platform/public/NLP/private/zhaiyanbo/model/Qwen2.5-VL-3B-Instruct',
+[36m(TaskRunner pid=2985779)[0m                       'trust_remote_code': False,
+[36m(TaskRunner pid=2985779)[0m                       'use_remove_padding': False,
+[36m(TaskRunner pid=2985779)[0m                       'use_shm': False},
+[36m(TaskRunner pid=2985779)[0m             'optim': {'_target_': 'verl.workers.config.FSDPOptimizerConfig',
+[36m(TaskRunner pid=2985779)[0m                       'lr': 1e-05,
+[36m(TaskRunner pid=2985779)[0m                       'lr_warmup_steps': -1,
+[36m(TaskRunner pid=2985779)[0m                       'lr_warmup_steps_ratio': 0.0,
+[36m(TaskRunner pid=2985779)[0m                       'min_lr_ratio': None,
+[36m(TaskRunner pid=2985779)[0m                       'total_training_steps': -1,
+[36m(TaskRunner pid=2985779)[0m                       'warmup_style': 'constant',
+[36m(TaskRunner pid=2985779)[0m                       'weight_decay': 0.01},
+[36m(TaskRunner pid=2985779)[0m             'ppo_epochs': 1,
+[36m(TaskRunner pid=2985779)[0m             'ppo_max_token_len_per_gpu': 32768,
+[36m(TaskRunner pid=2985779)[0m             'ppo_micro_batch_size': None,
+[36m(TaskRunner pid=2985779)[0m             'ppo_micro_batch_size_per_gpu': None,
+[36m(TaskRunner pid=2985779)[0m             'ppo_mini_batch_size': 16,
+[36m(TaskRunner pid=2985779)[0m             'profiler': {'_target_': 'verl.utils.profiler.ProfilerConfig',
+[36m(TaskRunner pid=2985779)[0m                          'all_ranks': False,
+[36m(TaskRunner pid=2985779)[0m                          'discrete': False,
+[36m(TaskRunner pid=2985779)[0m                          'ranks': []},
+[36m(TaskRunner pid=2985779)[0m             'rollout_n': 8,
+[36m(TaskRunner pid=2985779)[0m             'shuffle': False,
+[36m(TaskRunner pid=2985779)[0m             'strategy': 'fsdp',
+[36m(TaskRunner pid=2985779)[0m             'ulysses_sequence_parallel_size': 1,
+[36m(TaskRunner pid=2985779)[0m             'use_dynamic_bsz': True},
+[36m(TaskRunner pid=2985779)[0m  'custom_reward_function': {'name': 'compute_score', 'path': None},
+[36m(TaskRunner pid=2985779)[0m  'data': {'custom_cls': {'name': None, 'path': None},
+[36m(TaskRunner pid=2985779)[0m           'datagen': {'name': None, 'path': None},
+[36m(TaskRunner pid=2985779)[0m           'dataloader_num_workers': 8,
+[36m(TaskRunner pid=2985779)[0m           'filter_overlong_prompts': True,
+[36m(TaskRunner pid=2985779)[0m           'filter_overlong_prompts_workers': 1,
+[36m(TaskRunner pid=2985779)[0m           'gen_batch_size': 96,
+[36m(TaskRunner pid=2985779)[0m           'image_key': 'images',
+[36m(TaskRunner pid=2985779)[0m           'max_prompt_length': 1024,
+[36m(TaskRunner pid=2985779)[0m           'max_response_length': 4096,
+[36m(TaskRunner pid=2985779)[0m           'prompt_key': 'prompt',
+[36m(TaskRunner pid=2985779)[0m           'return_full_prompt': False,
+[36m(TaskRunner pid=2985779)[0m           'return_multi_modal_inputs': True,
+[36m(TaskRunner pid=2985779)[0m           'return_raw_chat': False,
+[36m(TaskRunner pid=2985779)[0m           'return_raw_input_ids': False,
+[36m(TaskRunner pid=2985779)[0m           'reward_fn_key': 'data_source',
+[36m(TaskRunner pid=2985779)[0m           'sampler': {'class_name': None, 'class_path': None},
+[36m(TaskRunner pid=2985779)[0m           'shuffle': True,
+[36m(TaskRunner pid=2985779)[0m           'tokenizer': None,
+[36m(TaskRunner pid=2985779)[0m           'train_batch_size': 32,
+[36m(TaskRunner pid=2985779)[0m           'train_files': '/gemini/user/private/table_reasoning/zhaiyanbo/verl/data/rl_data/train.parquet',
+[36m(TaskRunner pid=2985779)[0m           'truncation': 'error',
+[36m(TaskRunner pid=2985779)[0m           'trust_remote_code': False,
+[36m(TaskRunner pid=2985779)[0m           'use_shm': False,
+[36m(TaskRunner pid=2985779)[0m           'val_batch_size': None,
+[36m(TaskRunner pid=2985779)[0m           'val_files': '/gemini/user/private/table_reasoning/zhaiyanbo/verl/data/rl_data/test.parquet',
+[36m(TaskRunner pid=2985779)[0m           'validation_shuffle': False,
+[36m(TaskRunner pid=2985779)[0m           'video_key': 'videos'},
+[36m(TaskRunner pid=2985779)[0m  'ray_init': {'num_cpus': None, 'timeline_json_file': None},
+[36m(TaskRunner pid=2985779)[0m  'reward_model': {'enable': False,
+[36m(TaskRunner pid=2985779)[0m                   'forward_max_token_len_per_gpu': 32768,
+[36m(TaskRunner pid=2985779)[0m                   'launch_reward_fn_async': False,
+[36m(TaskRunner pid=2985779)[0m                   'max_length': None,
+[36m(TaskRunner pid=2985779)[0m                   'micro_batch_size': None,
+[36m(TaskRunner pid=2985779)[0m                   'micro_batch_size_per_gpu': None,
+[36m(TaskRunner pid=2985779)[0m                   'model': {'external_lib': None,
+[36m(TaskRunner pid=2985779)[0m                             'fsdp_config': {'_target_': 'verl.workers.config.FSDPEngineConfig',
+[36m(TaskRunner pid=2985779)[0m                                             'forward_prefetch': False,
+[36m(TaskRunner pid=2985779)[0m /gemini/user/private/table_reasoning/zhaiyanbo/verl/recipe/dapo/main_dapo.py:155: UserWarning: Disabled critic as algorithm.adv_estimator != gae. If it is not intended, please set critic.enable=True
+[36m(TaskRunner pid=2985779)[0m   trainer = RayDAPOTrainer(
+[36m(TaskRunner pid=2985779)[0m 
+Filtering prompts longer than 1024 tokens:   0%|          | 0/2255 [00:00<?, ? examples/s]
+[36m(TaskRunner pid=2985779)[0m 
+Filtering prompts longer than 1024 tokens:  44%|████▍     | 1000/2255 [00:14<00:18, 69.13 examples/s]
+[36m(TaskRunner pid=2985779)[0m 
+Filtering prompts longer than 1024 tokens:  89%|████████▊ | 2000/2255 [00:28<00:03, 69.41 examples/s]
+[36m(TaskRunner pid=2985779)[0m 
+Filtering prompts longer than 1024 tokens: 100%|██████████| 2255/2255 [00:32<00:00, 69.29 examples/s]
+Filtering prompts longer than 1024 tokens: 100%|██████████| 2255/2255 [00:32<00:00, 69.29 examples/s]
+[36m(TaskRunner pid=2985779)[0m 
+Filtering prompts longer than 1024 tokens:   0%|          | 0/100 [00:00<?, ? examples/s]
+[36m(TaskRunner pid=2985779)[0m 
+Filtering prompts longer than 1024 tokens: 100%|██████████| 100/100 [00:01<00:00, 64.63 examples/s]
+Filtering prompts longer than 1024 tokens: 100%|██████████| 100/100 [00:01<00:00, 64.58 examples/s]
+[36m(TaskRunner pid=2985779)[0m DeprecationWarning: `ray.state.available_resources_per_node` is a private attribute and access will be removed in a future Ray version.
+[36m(TaskRunner pid=2985779)[0m WARNING:2025-08-07 23:47:46,084:Waiting for register center actor 6Yfhas_register_center to be ready. Elapsed time: 0 seconds out of 300 seconds.
+[36m(WorkerDict pid=2987390)[0m Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.52, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+[36m(WorkerDict pid=2987390)[0m Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2_5_VLForConditionalGeneration is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[36m(WorkerDict pid=2987390)[0m You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+[36m(WorkerDict pid=2987390)[0m Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2_5_VisionTransformerPretrainedModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[36m(TaskRunner pid=2985779)[0m                                             'fsdp_size': -1,
+[36m(TaskRunner pid=2985779)[0m                                             'param_offload': False,
+[36m(TaskRunner pid=2985779)[0m                                             'reshard_after_forward': True,
+[36m(TaskRunner pid=2985779)[0m                                             'wrap_policy': {'min_num_params': 0}},
+[36m(TaskRunner pid=2985779)[0m                             'input_tokenizer': '/gemini/platform/public/NLP/private/zhaiyanbo/model/Qwen2.5-VL-3B-Instruct',
+[36m(TaskRunner pid=2985779)[0m                             'path': '~/models/FsfairX-LLaMA3-RM-v0.1',
+[36m(TaskRunner pid=2985779)[0m                             'trust_remote_code': False,
+[36m(TaskRunner pid=2985779)[0m                             'use_fused_kernels': False,
+[36m(TaskRunner pid=2985779)[0m                             'use_remove_padding': False,
+[36m(TaskRunner pid=2985779)[0m                             'use_shm': False},
+[36m(TaskRunner pid=2985779)[0m                   'overlong_buffer': {'enable': True,
+[36m(TaskRunner pid=2985779)[0m                                       'len': 1024,
+[36m(TaskRunner pid=2985779)[0m                                       'log': False,
+[36m(TaskRunner pid=2985779)[0m                                       'penalty_factor': 1.0},
+[36m(TaskRunner pid=2985779)[0m                   'profiler': {'_target_': 'verl.utils.profiler.ProfilerConfig',
+[36m(TaskRunner pid=2985779)[0m                                'all_ranks': False,
+[36m(TaskRunner pid=2985779)[0m                                'discrete': False,
+[36m(TaskRunner pid=2985779)[0m                                'ranks': []},
+[36m(TaskRunner pid=2985779)[0m                   'reward_manager': 'dapo',
+[36m(TaskRunner pid=2985779)[0m                   'sandbox_fusion': {'max_concurrent': 64,
+[36m(TaskRunner pid=2985779)[0m                                      'memory_limit_mb': 1024,
+[36m(TaskRunner pid=2985779)[0m                                      'url': None},
+[36m(TaskRunner pid=2985779)[0m                   'strategy': 'fsdp',
+[36m(TaskRunner pid=2985779)[0m                   'ulysses_sequence_parallel_size': 1,
+[36m(TaskRunner pid=2985779)[0m                   'use_dynamic_bsz': True},
+[36m(TaskRunner pid=2985779)[0m  'trainer': {'balance_batch': True,
+[36m(TaskRunner pid=2985779)[0m              'controller_nsight_options': {'cuda-graph-trace': 'graph',
+[36m(TaskRunner pid=2985779)[0m                                            'cuda-memory-usage': 'true',
+[36m(TaskRunner pid=2985779)[0m                                            'trace': 'cuda,nvtx,cublas,ucx'},
+[36m(TaskRunner pid=2985779)[0m              'critic_warmup': 0,
+[36m(TaskRunner pid=2985779)[0m              'default_hdfs_dir': None,
+[36m(TaskRunner pid=2985779)[0m              'default_local_dir': '/gemini/platform/public/NLP/private/project_model/math/ckpts/DAPO-Qwen2.5-VL-Math',
+[36m(TaskRunner pid=2985779)[0m              'del_local_ckpt_after_load': False,
+[36m(TaskRunner pid=2985779)[0m              'device': 'cuda',
+[36m(TaskRunner pid=2985779)[0m              'esi_redundant_time': 0,
+[36m(TaskRunner pid=2985779)[0m              'experiment_name': 'DAPO-Qwen2.5-VL-3B',
+[36m(TaskRunner pid=2985779)[0m              'log_val_generations': 0,
+[36m(TaskRunner pid=2985779)[0m              'logger': ['console', 'wandb'],
+[36m(TaskRunner pid=2985779)[0m              'max_actor_ckpt_to_keep': None,
+[36m(TaskRunner pid=2985779)[0m              'max_critic_ckpt_to_keep': None,
+[36m(TaskRunner pid=2985779)[0m              'n_gpus_per_node': 8,
+[36m(TaskRunner pid=2985779)[0m              'nnodes': 1,
+[36m(TaskRunner pid=2985779)[0m              'npu_profile': {'options': {'analysis': True,
+[36m(TaskRunner pid=2985779)[0m                                          'level': 'level1',
+[36m(TaskRunner pid=2985779)[0m                                          'record_shapes': False,
+[36m(TaskRunner pid=2985779)[0m                                          'roles': ['all'],
+[36m(TaskRunner pid=2985779)[0m                                          'save_path': './profiler_data',
+[36m(TaskRunner pid=2985779)[0m                                          'with_cpu': True,
+[36m(TaskRunner pid=2985779)[0m                                          'with_memory': False,
+[36m(TaskRunner pid=2985779)[0m                                          'with_module': False,
+[36m(TaskRunner pid=2985779)[0m                                          'with_npu': True,
+[36m(TaskRunner pid=2985779)[0m                                          'with_stack': False}},
+[36m(TaskRunner pid=2985779)[0m              'profile_continuous_steps': False,
+[36m(TaskRunner pid=2985779)[0m              'profile_steps': None,
+[36m(TaskRunner pid=2985779)[0m              'project_name': 'MATH',
+[36m(TaskRunner pid=2985779)[0m              'ray_wait_register_center_timeout': 300,
+[36m(TaskRunner pid=2985779)[0m              'resume_from_path': None,
+[36m(TaskRunner pid=2985779)[0m              'resume_mode': 'auto',
+[36m(TaskRunner pid=2985779)[0m              'rollout_data_dir': None,
+[36m(TaskRunner pid=2985779)[0m              'save_freq': 10,
+[36m(TaskRunner pid=2985779)[0m              'test_freq': 10,
+[36m(TaskRunner pid=2985779)[0m              'total_epochs': 10,
+[36m(TaskRunner pid=2985779)[0m              'total_training_steps': None,
+[36m(TaskRunner pid=2985779)[0m              'use_legacy_worker_impl': 'auto',
+[36m(TaskRunner pid=2985779)[0m              'val_before_train': True,
+[36m(TaskRunner pid=2985779)[0m              'val_only': False,
+[36m(TaskRunner pid=2985779)[0m              'validation_data_dir': None,
+[36m(TaskRunner pid=2985779)[0m              'worker_nsight_options': {'capture-range': 'cudaProfilerApi',
+[36m(TaskRunner pid=2985779)[0m                                        'capture-range-end': None,
+[36m(TaskRunner pid=2985779)[0m                                        'cuda-graph-trace': 'graph',
+[36m(TaskRunner pid=2985779)[0m                                        'cuda-memory-usage': 'true',
+[36m(TaskRunner pid=2985779)[0m                                        'kill': 'none',
+[36m(TaskRunner pid=2985779)[0m                                        'trace': 'cuda,nvtx,cublas,ucx'}}}
+[36m(TaskRunner pid=2985779)[0m [validate_config] All configuration checks passed successfully!
+[36m(TaskRunner pid=2985779)[0m Using dataset class: RLHFDataset
+[36m(TaskRunner pid=2985779)[0m dataset len: 2255
+[36m(TaskRunner pid=2985779)[0m filter dataset len: 2255
+[36m(TaskRunner pid=2985779)[0m Using dataset class: RLHFDataset
+[36m(TaskRunner pid=2985779)[0m dataset len: 100
+[36m(TaskRunner pid=2985779)[0m filter dataset len: 100
+[36m(TaskRunner pid=2985779)[0m Size of train dataloader: 23, Size of val dataloader: 1
+[36m(TaskRunner pid=2985779)[0m Total training steps: 230
+[36m(TaskRunner pid=2985779)[0m colocated worker base class <class 'verl.single_controller.base.worker.Worker'>
+[36m(WorkerDict pid=2987120)[0m Model config after override: Qwen2_5_VLConfig {
+[36m(WorkerDict pid=2987120)[0m   "architectures": [
+[36m(WorkerDict pid=2987120)[0m     "Qwen2_5_VLForConditionalGeneration"
+[36m(WorkerDict pid=2987120)[0m   ],
+[36m(WorkerDict pid=2987120)[0m   "attention_dropout": 0.0,
+[36m(WorkerDict pid=2987120)[0m   "eos_token_id": 151645,
+[36m(WorkerDict pid=2987120)[0m   "hidden_act": "silu",
+[36m(WorkerDict pid=2987120)[0m   "hidden_size": 2048,
+[36m(WorkerDict pid=2987120)[0m   "image_token_id": 151655,
+[36m(WorkerDict pid=2987120)[0m   "initializer_range": 0.02,
+[36m(WorkerDict pid=2987120)[0m   "intermediate_size": 11008,
+[36m(WorkerDict pid=2987120)[0m   "max_position_embeddings": 128000,
+[36m(WorkerDict pid=2987120)[0m   "max_window_layers": 70,
+[36m(WorkerDict pid=2987120)[0m   "model_type": "qwen2_5_vl",
+[36m(WorkerDict pid=2987120)[0m   "num_attention_heads": 16,
+[36m(WorkerDict pid=2987120)[0m   "num_hidden_layers": 36,
+[36m(WorkerDict pid=2987390)[0m 
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]
+[36m(WorkerDict pid=2987388)[0m 
+Loading checkpoint shards:  50%|█████     | 1/2 [00:05<00:05,  5.51s/it]
+[36m(WorkerDict pid=2987120)[0m Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.52, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.[32m [repeated 7x across cluster] (Ray deduplicates logs by default. Set RAY_DEDUP_LOGS=0 to disable log deduplication, or see https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#log-deduplication for more options.)[0m
+[36m(WorkerDict pid=2987120)[0m Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2_5_VisionTransformerPretrainedModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`[32m [repeated 14x across cluster][0m
+[36m(WorkerDict pid=2987120)[0m You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.[32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=2987120)[0m 
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s][32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=2987388)[0m 
+Loading checkpoint shards: 100%|██████████| 2/2 [00:10<00:00,  5.05s/it]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:10<00:00,  5.12s/it]
+[36m(WorkerDict pid=2987390)[0m 
+Loading checkpoint shards:  50%|█████     | 1/2 [00:06<00:06,  6.62s/it][32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=2987388)[0m /usr/local/lib/python3.10/dist-packages/torch/distributed/fsdp/fully_sharded_data_parallel.py:690: FutureWarning: FSDP.state_dict_type() and FSDP.set_state_dict_type() are being deprecated. Please use APIs, get_state_dict() and set_state_dict(), which can support different parallelisms, FSDP1, FSDP2, DDP. API doc: https://pytorch.org/docs/stable/distributed.checkpoint.html#torch.distributed.checkpoint.state_dict.get_state_dict .Tutorial: https://pytorch.org/tutorials/recipes/distributed_checkpoint_recipe.html .
+[36m(WorkerDict pid=2987388)[0m   warnings.warn(
+[36m(WorkerDict pid=2987120)[0m 
+Loading checkpoint shards: 100%|██████████| 2/2 [00:10<00:00,  5.12s/it]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:10<00:00,  5.32s/it][32m [repeated 7x across cluster][0m
+[36m(TaskRunner pid=2985779)[0m wandb: Tracking run with wandb version 0.20.1
+[36m(TaskRunner pid=2985779)[0m wandb: W&B syncing is set to `offline` in this directory. Run `wandb online` or set WANDB_MODE=online to enable cloud syncing.
+[36m(WorkerDict pid=2987120)[0m   "num_key_value_heads": 2,
+[36m(WorkerDict pid=2987120)[0m   "pad_token_id": 151643,
+[36m(WorkerDict pid=2987120)[0m   "rms_norm_eps": 1e-06,
+[36m(WorkerDict pid=2987120)[0m   "rope_scaling": {
+[36m(WorkerDict pid=2987120)[0m     "mrope_section": [
+[36m(WorkerDict pid=2987120)[0m       16,
+[36m(WorkerDict pid=2987120)[0m       24,
+[36m(WorkerDict pid=2987120)[0m       24
+[36m(WorkerDict pid=2987120)[0m     ],
+[36m(WorkerDict pid=2987120)[0m     "rope_type": "default",
+[36m(WorkerDict pid=2987120)[0m     "type": "default"
+[36m(WorkerDict pid=2987120)[0m   },
+[36m(WorkerDict pid=2987120)[0m   "rope_theta": 1000000.0,
+[36m(WorkerDict pid=2987120)[0m   "sliding_window": 32768,
+[36m(WorkerDict pid=2987120)[0m   "tie_word_embeddings": true,
+[36m(WorkerDict pid=2987120)[0m   "torch_dtype": "bfloat16",
+[36m(WorkerDict pid=2987120)[0m   "transformers_version": "4.51.1",
+[36m(WorkerDict pid=2987120)[0m   "use_cache": true,
+[36m(WorkerDict pid=2987120)[0m   "use_sliding_window": false,
+[36m(WorkerDict pid=2987120)[0m   "video_token_id": 151656,
+[36m(WorkerDict pid=2987120)[0m   "vision_config": {
+[36m(WorkerDict pid=2987120)[0m     "depth": 32,
+[36m(WorkerDict pid=2987120)[0m     "fullatt_block_indexes": [
+[36m(WorkerDict pid=2987120)[0m       7,
+[36m(WorkerDict pid=2987120)[0m       15,
+[36m(WorkerDict pid=2987120)[0m       23,
+[36m(WorkerDict pid=2987120)[0m       31
+[36m(WorkerDict pid=2987120)[0m     ],
+[36m(WorkerDict pid=2987120)[0m     "hidden_act": "silu",
+[36m(WorkerDict pid=2987120)[0m     "hidden_size": 1280,
+[36m(WorkerDict pid=2987120)[0m     "in_channels": 3,
+[36m(WorkerDict pid=2987120)[0m     "in_chans": 3,
+[36m(WorkerDict pid=2987120)[0m     "intermediate_size": 3420,
+[36m(WorkerDict pid=2987120)[0m     "model_type": "qwen2_5_vl",
+[36m(WorkerDict pid=2987120)[0m     "num_heads": 16,
+[36m(WorkerDict pid=2987120)[0m     "out_hidden_size": 2048,
+[36m(WorkerDict pid=2987120)[0m     "patch_size": 14,
+[36m(WorkerDict pid=2987120)[0m     "spatial_merge_size": 2,
+[36m(WorkerDict pid=2987120)[0m     "spatial_patch_size": 14,
+[36m(WorkerDict pid=2987120)[0m     "temporal_patch_size": 2,
+[36m(WorkerDict pid=2987120)[0m     "tokens_per_second": 2,
+[36m(WorkerDict pid=2987120)[0m     "window_size": 112
+[36m(WorkerDict pid=2987120)[0m   },
+[36m(WorkerDict pid=2987120)[0m   "vision_end_token_id": 151653,
+[36m(WorkerDict pid=2987120)[0m   "vision_start_token_id": 151652,
+[36m(WorkerDict pid=2987120)[0m   "vision_token_id": 151654,
+[36m(WorkerDict pid=2987120)[0m   "vocab_size": 151936
+[36m(WorkerDict pid=2987120)[0m }
+[36m(WorkerDict pid=2987120)[0m 
+[36m(WorkerDict pid=2987388)[0m Monkey patch state_dict in AutoModelForCausalLMWithValueHead. 
+[36m(WorkerDict pid=2987388)[0m Monkey patch FlashAttention2.forward in Qwen2.5VL
+[36m(WorkerDict pid=2987388)[0m Monkey patch Qwen2_5_VLModel.forward for Ulysses SP input slicing.
+[36m(WorkerDict pid=2987388)[0m Monkey patch _flash_attention_forward in transformers.models.qwen2_5_vl.modeling_qwen2_5_vl
+[36m(WorkerDict pid=2987388)[0m Skipping monkey patch for Qwen2_5_VLForConditionalGeneration as use_fused_kernels is False or fused_kernels_backend is torch
+[36m(WorkerDict pid=2987120)[0m Qwen2_5_VLForConditionalGeneration contains 3.75B parameters
+[36m(WorkerDict pid=2987120)[0m wrap_policy: functools.partial(<function _or_policy at 0x7f0bee195360>, policies=[functools.partial(<function transformer_auto_wrap_policy at 0x7f0bee195240>, transformer_layer_cls={<class 'transformers.models.qwen2_5_vl.modeling_qwen2_5_vl.Qwen2_5_VLVisionBlock'>, <class 'transformers.models.qwen2_5_vl.modeling_qwen2_5_vl.Qwen2_5_VLDecoderLayer'>})])
+[36m(WorkerDict pid=2987120)[0m NCCL version 2.21.5+cuda12.4
+[36m(WorkerDict pid=2987120)[0m Total steps: 230, num_warmup_steps: 10
+[36m(WorkerDict pid=2987120)[0m Monkey patch state_dict in AutoModelForCausalLMWithValueHead. [32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=2987120)[0m Monkey patch FlashAttention2.forward in Qwen2.5VL[32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=2987120)[0m Monkey patch Qwen2_5_VLModel.forward for Ulysses SP input slicing.[32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=2987120)[0m Monkey patch _flash_attention_forward in transformers.models.qwen2_5_vl.modeling_qwen2_5_vl[32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=2987120)[0m Skipping monkey patch for Qwen2_5_VLForConditionalGeneration as use_fused_kernels is False or fused_kernels_backend is torch[32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=2987120)[0m Actor use_remove_padding=True
+[36m(WorkerDict pid=2987120)[0m Actor use_fused_kernels=False
+[36m(WorkerDict pid=2987389)[0m WARNING 08-07 23:48:47 [cuda.py:93] To see benefits of async output processing, enable CUDA graph. Since, enforce-eager is enabled, async output processor cannot be used
+[36m(WorkerDict pid=2987389)[0m WARNING 08-07 23:48:47 [utils.py:2522] Methods determine_num_available_blocks,device_config,get_cache_block_size_bytes,initialize_cache not implemented in <vllm.v1.worker.gpu_worker.Worker object at 0x7f649d1bf370>
+[36m(WorkerDict pid=2987387)[0m NCCL version 2.21.5+cuda12.4
+[36m(WorkerDict pid=2987388)[0m kwargs: {'n': 1, 'logprobs': 0, 'max_tokens': 4096, 'detokenize': False, 'temperature': 1.0, 'top_k': -1, 'top_p': 1.0, 'ignore_eos': False}
+[36m(WorkerDict pid=2987390)[0m WARNING 08-07 23:48:47 [cuda.py:93] To see benefits of async output processing, enable CUDA graph. Since, enforce-eager is enabled, async output processor cannot be used[32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=2987390)[0m WARNING 08-07 23:48:48 [utils.py:2522] Methods determine_num_available_blocks,device_config,get_cache_block_size_bytes,initialize_cache not implemented in <vllm.v1.worker.gpu_worker.Worker object at 0x7fb5bcd2b310>[32m [repeated 7x across cluster][0m
+[36m(TaskRunner pid=2985779)[0m Checkpoint tracker file does not exist: /gemini/platform/public/NLP/private/project_model/math/ckpts/DAPO-Qwen2.5-VL-Math/latest_checkpointed_iteration.txt
+[36m(TaskRunner pid=2985779)[0m Training from scratch
+[36m(TaskRunner pid=2985779)[0m test_gen_batch meta info: {'eos_token_id': 151645, 'pad_token_id': 151643, 'recompute_log_prob': False, 'do_sample': True, 'validate': True, 'global_steps': 0}
+[36m(WorkerDict pid=2987386)[0m kwargs: {'n': 1, 'logprobs': 0, 'max_tokens': 4096, 'detokenize': False, 'temperature': 1.0, 'top_k': -1, 'top_p': 1.0, 'ignore_eos': False}[32m [repeated 7x across cluster][0m
+[36m(TaskRunner pid=2985779)[0m validation generation end
+[36m(TaskRunner pid=2985779)[0m [prompt] system
+[36m(TaskRunner pid=2985779)[0m You are a helpful assistant.
+[36m(TaskRunner pid=2985779)[0m user
+[36m(TaskRunner pid=2985779)[0m You are a math teacher and now you need to complete a math multiple-choice question. Please put The thinking process in <think> thinking process </think>, and put the final chosen option in <answer>The answer is \boxed{capitalized option}.</answer>.
+[36m(TaskRunner pid=2985779)[0m 
+[36m(TaskRunner pid=2985779)[0m Solve the problem in the image.
+[36m(TaskRunner pid=2985779)[0m assistant
+[36m(TaskRunner pid=2985779)[0m 
+[36m(TaskRunner pid=2985779)[0m [response] To solve this problem, we need to analyze the given information and apply the properties of the hyperbola and the parabola.
+[36m(TaskRunner pid=2985779)[0m 
+[36m(TaskRunner pid=2985779)[0m 1. **Identify the equation of the hyperbola:**
+[36m(TaskRunner pid=2985779)[0m    Since the hyperbola is centered at the origin and its foci lie on the x-axis, the standard form of the hyperbola's equation is:
+[36m(TaskRunner pid=2985779)[0m    \[
+[36m(TaskRunner pid=2985779)[0m    \frac{x^2}{a^2} - \frac{y^2}{b^2} = 1
+[36m(TaskRunner pid=2985779)[0m    \]
+[36m(TaskRunner pid=2985779)[0m    The eccentricity \(e\) of a hyperbola is given by:
+[36m(TaskRunner pid=2985779)[0m    \[
+[36m(TaskRunner pid=2985779)[0m    e = \sqrt{1 + \frac{b^2}{a^2}}
+[36m(TaskRunner pid=2985779)[0m    \]
+[36m(TaskRunner pid=2985779)[0m    Given that the hyperbola is "equal-axial" (i.e., \(a = b\)), the eccentricity \(e\) simplifies to:
+[36m(TaskRunner pid=2985779)[0m    \[
+[36m(TaskRunner pid=2985779)[0m    e = \sqrt{1 + 1} = \sqrt{2}
+[36m(TaskRunner pid=2985779)[0m    \]
+[36m(TaskRunner pid=2985779)[0m 
+[36m(TaskRunner pid=2985779)[0m 2. **Identify the equation of the parabola:**
+[36m(TaskRunner pid=2985779)[0m    The given equation of the parabola is:
+[36m(TaskRunner pid=2985779)[0m    \[
+[36m(TaskRunner pid=2985779)[0m    y^2 = 16x
+[36m(TaskRunner pid=2985779)[0m    \]
+[36m(TaskRunner pid=2985779)[0m    This can be rewritten in standard form as:
+[36m(TaskRunner pid=2985779)[0m    \[
+[36m(TaskRunner pid=2985779)[0m    y^2 = 4px \quad \text{where} \quad p = 4
+[36m(TaskRunner pid=2985779)[0m    \]
+[36m(TaskRunner pid=2985779)[0m    The focus of the parabola \(y^2 = 4px\) is at \((p, 0)\), which in this case is \((4, 0)\). The directrix of the parabola is the line:
+[36m(TaskRunner pid=2985779)[0m    \[
+[36m(TaskRunner pid=2985779)[0m    x = -p = -4
+[36m(TaskRunner pid=2985779)[0m    \]
+[36m(TaskRunner pid=2985779)[0m 
+[36m(TaskRunner pid=2985779)[0m 3. **Find the intersection points:**
+[36m(TaskRunner pid=2985779)[0m    The hyperbola and the parabola intersect at points \(A\) and \(B\). The distance between these points is given as \(|AB| = 4\sqrt{3}\).
+[36m(TaskRunner pid=2985779)[0m 
+[36m(TaskRunner pid=2985779)[0m 4. **Use the distance formula:**
+[36m(TaskRunner pid=2985779)[0m    Since the hyperbola is centered at the origin and its foci lie on the x-axis, the distance between the points of intersection will be related to the distance from the origin to the focus of the parabola. The distance from the origin to the focus of the parabola is 4. The points of intersection will be symmetric about the x-axis, and the distance between them will be twice the x-coordinate of the points.
+[36m(TaskRunner pid=2985779)[0m 
+[36m(TaskRunner pid=2985779)[0m    Let's denote the x-coordinate of the points of intersection as \(x_0\). The distance between the points of intersection is:
+[36m(TaskRunner pid=2985779)[0m    \[
+[36m(TaskRunner pid=2985779)[0m    2x_0 = 4\sqrt{3}
+[36m(TaskRunner pid=2985779)[0m    \]
+[36m(TaskRunner pid=2985779)[0m    Solving for \(x_0\):
+[36m(TaskRunner pid=2985779)[0m    \[
+[36m(TaskRunner pid=2985779)[0m    x_0 = 2\sqrt{3}
+[36m(TaskRunner pid=2985779)[0m    \]
+[36m(TaskRunner pid=2985779)[0m 
+[36m(TaskRunner pid=2985779)[0m 5. **Determine the value of \(a\):**
+[36m(TaskRunner pid=2985779)[0m    The x-coordinate of the points of intersection is related to the distance from the origin to the focus of the parabola. Since the distance from the origin to the focus is 4, and the x-coordinate of the points of intersection is \(2\sqrt{3}\), we can use the relationship:
+[36m(TaskRunner pid=2985779)[0m    \[
+[36m(TaskRunner pid=2985779)[0m    x_0 = a\sqrt{2}
+[36m(TaskRunner pid=2985779)[0m    \]
+[36m(TaskRunner pid=2985779)[0m    Solving for \(a\):
+[36m(TaskRunner pid=2985779)[0m    \[
+[36m(TaskRunner pid=2985779)[0m    a\sqrt{2} = 2\sqrt{3}
+[36m(TaskRunner pid=2985779)[0m    \]
+[36m(TaskRunner pid=2985779)[0m    \[
+[36m(TaskRunner pid=2985779)[0m    a = \frac{2\sqrt{3}}{\sqrt{2}} = \sqrt{6}
+[36m(TaskRunner pid=2985779)[0m    \]
+[36m(TaskRunner pid=2985779)[0m 
+[36m(TaskRunner pid=2985779)[0m 6. **Find the real axis length:**
+[36m(TaskRunner pid=2985779)[0m    The real axis length of the hyperbola is \(2a\). Therefore:
+[36m(TaskRunner pid=2985779)[0m    \[
+[36m(TaskRunner pid=2985779)[0m    2a = 2\sqrt{6}
+[36m(TaskRunner pid=2985779)[0m    \]
+[36m(TaskRunner pid=2985779)[0m 
+[36m(TaskRunner pid=2985779)[0m However, we need to check the options provided:
+[36m(TaskRunner pid=2985779)[0m - A: \(\sqrt{2}\)
+[36m(TaskRunner pid=2985779)[0m - B: \(2\sqrt{2}\)
+[36m(TaskRunner pid=2985779)[0m - C: 4
+[36m(TaskRunner pid=2985779)[0m - D: 8
+[36m(TaskRunner pid=2985779)[0m 
+[36m(TaskRunner pid=2985779)[0m The correct answer is:
+[36m(TaskRunner pid=2985779)[0m \[
+[36m(TaskRunner pid=2985779)[0m \boxed{B}
+[36m(TaskRunner pid=2985779)[0m \]
+[36m(TaskRunner pid=2985779)[0m [ground_truth] C
+[36m(TaskRunner pid=2985779)[0m [score] -0.5
+[36m(TaskRunner pid=2985779)[0m [structure] -0.5
+[36m(TaskRunner pid=2985779)[0m [boxed] 0.0
+[36m(TaskRunner pid=2985779)[0m [correct] 0.0
+[36m(TaskRunner pid=2985779)[0m [acc] False
+[36m(TaskRunner pid=2985779)[0m len reward_extra_infos_dict['reward']: 100
+[36m(TaskRunner pid=2985779)[0m len reward_extra_infos_dict['score']: 100
+[36m(TaskRunner pid=2985779)[0m len reward_extra_infos_dict['structure']: 100
+[36m(TaskRunner pid=2985779)[0m len reward_extra_infos_dict['boxed']: 100
+[36m(TaskRunner pid=2985779)[0m len reward_extra_infos_dict['correct']: 100
+[36m(TaskRunner pid=2985779)[0m len reward_extra_infos_dict['acc']: 100
+[36m(TaskRunner pid=2985779)[0m ("Initial validation metrics: {'val-aux/grpo_convert/reward/mean@50': -0.38, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/std@50': 0.4160035150400291, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/best@2/mean': -0.2515, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/best@2/std': 0.5725254982057535, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/worst@2/mean': -0.49224999999999997, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/worst@2/std': 0.09744237482638723, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/best@4/mean': -0.045750000000000006, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/best@4/std': 0.719362689680157, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/worst@4/mean': -0.4995, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/worst@4/std': 0.015803480629279113, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/best@8/mean': 0.27649999999999997, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/best@8/std': 0.8019750970928194, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/worst@8/mean': -0.5, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/worst@8/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/best@16/mean': 0.68425, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/best@16/std': 0.7305309336667452, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/worst@16/mean': -0.5, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/worst@16/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/best@32/mean': 1.04475, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/best@32/std': 0.463457710620411, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/worst@32/mean': -0.5, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/worst@32/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/best@50/mean': 1.183, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/best@50/std': 0.24719441115907892, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/worst@50/mean': -0.5, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/reward/worst@50/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/mean@50': -0.38, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/std@50': 0.4160035150400291, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/best@2/mean': -0.2515, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/best@2/std': 0.5725254982057535, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/worst@2/mean': -0.49224999999999997, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/worst@2/std': 0.09744237482638723, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/best@4/mean': -0.045750000000000006, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/best@4/std': 0.719362689680157, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/worst@4/mean': -0.4995, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/worst@4/std': 0.015803480629279113, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/best@8/mean': 0.27649999999999997, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/best@8/std': 0.8019750970928194, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/worst@8/mean': -0.5, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/worst@8/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/best@16/mean': 0.68425, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/best@16/std': 0.7305309336667452, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/worst@16/mean': -0.5, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/worst@16/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/best@32/mean': 1.04475, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/best@32/std': 0.463457710620411, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/worst@32/mean': -0.5, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/worst@32/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/best@50/mean': 1.183, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/best@50/std': 0.24719441115907892, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/worst@50/mean': -0.5, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/score/worst@50/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/mean@50': -0.42, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/std@50': 0.2712931993250107, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/best@2/mean': -0.3345, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/best@2/std': 0.37162572179328507, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/worst@2/mean': -0.4935, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/worst@2/std': 0.07980895485180488, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/best@4/mean': -0.20350000000000001, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/best@4/std': 0.4567111267392585, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/worst@4/mean': -0.4995, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/worst@4/std': 0.015803480629279113, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/best@8/mean': -0.006, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/best@8/std': 0.49947965940437505, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/worst@8/mean': -0.5, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/worst@8/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/best@16/mean': 0.2435, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/best@16/std': 0.4365024000102831, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/worst@16/mean': -0.5, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/worst@16/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/best@32/mean': 0.433, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/best@32/std': 0.2492170333788084, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/worst@32/mean': -0.5, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/worst@32/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/best@50/mean': 0.4875, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/best@50/std': 0.10917763145507442, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/worst@50/mean': -0.5, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/structure/worst@50/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/mean@50': 0.02, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/std@50': 0.06782329983125268, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/best@2/mean': 0.041, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/best@2/std': 0.09256889326334197, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/worst@2/mean': 0.00125, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/worst@2/std': 0.017633419974582357, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/best@4/mean': 0.07375, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/best@4/std': 0.1140106902882357, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/worst@4/mean': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/worst@4/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/best@8/mean': 0.129, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/best@8/std': 0.124935983607606, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/worst@8/mean': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/worst@8/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/best@16/mean': 0.18875, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/best@16/std': 0.10752180011513945, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/worst@16/mean': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/worst@16/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/best@32/mean': 0.23575, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/best@32/std': 0.05796065475820646, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/worst@32/mean': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/worst@32/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/best@50/mean': 0.248, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/best@50/std': 0.022271057451320086, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/worst@50/mean': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/boxed/worst@50/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/mean@50': 0.02, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/std@50': 0.09797958971132714, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/best@2/mean': 0.042, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/best@2/std': 0.13869390758068645, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/worst@2/mean': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/worst@2/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/best@4/mean': 0.084, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/best@4/std': 0.18693314312876674, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/worst@4/mean': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/worst@4/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/best@8/mean': 0.1535, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/best@8/std': 0.2306246951217497, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/worst@8/mean': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/worst@8/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/best@16/mean': 0.252, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/best@16/std': 0.2499919998719959, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/worst@16/mean': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/worst@16/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/best@32/mean': 0.376, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/best@32/std': 0.21592591322025242, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/worst@32/mean': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/worst@32/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/best@50/mean': 0.4475, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/best@50/std': 0.1532767105596933, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/worst@50/mean': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/correct/worst@50/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-core/grpo_convert/acc/mean@50': 0.02, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/std@50': 0.09797958971132714, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/best@2/mean': 0.042, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/best@2/std': 0.13869390758068645, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/worst@2/mean': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/worst@2/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/best@4/mean': 0.084, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/best@4/std': 0.18693314312876674, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/worst@4/mean': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/worst@4/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/best@8/mean': 0.1535, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/best@8/std': 0.2306246951217497, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/worst@8/mean': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/worst@8/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/best@16/mean': 0.252, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/best@16/std': 0.2499919998719959, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/worst@16/mean': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/worst@16/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/best@32/mean': 0.376, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/best@32/std': 0.21592591322025242, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/worst@32/mean': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/worst@32/std': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-core/grpo_convert/acc/best@50/mean': 0.4475, "
+[36m(TaskRunner pid=2985779)[0m  "'val-core/grpo_convert/acc/best@50/std': 0.1532767105596933, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/worst@50/mean': 0.0, "
+[36m(TaskRunner pid=2985779)[0m  "'val-aux/grpo_convert/acc/worst@50/std': 0.0}")
+[36m(TaskRunner pid=2985779)[0m step:0 - val-aux/grpo_convert/reward/mean@50:-0.38 - val-aux/grpo_convert/reward/std@50:0.4160035150400291 - val-aux/grpo_convert/reward/best@2/mean:-0.2515 - val-aux/grpo_convert/reward/best@2/std:0.5725254982057535 - val-aux/grpo_convert/reward/worst@2/mean:-0.49224999999999997 - val-aux/grpo_convert/reward/worst@2/std:0.09744237482638723 - val-aux/grpo_convert/reward/best@4/mean:-0.045750000000000006 - val-aux/grpo_convert/reward/best@4/std:0.719362689680157 - val-aux/grpo_convert/reward/worst@4/mean:-0.4995 - val-aux/grpo_convert/reward/worst@4/std:0.015803480629279113 - val-aux/grpo_convert/reward/best@8/mean:0.27649999999999997 - val-aux/grpo_convert/reward/best@8/std:0.8019750970928194 - val-aux/grpo_convert/reward/worst@8/mean:-0.5 - val-aux/grpo_convert/reward/worst@8/std:0.0 - val-aux/grpo_convert/reward/best@16/mean:0.68425 - val-aux/grpo_convert/reward/best@16/std:0.7305309336667452 - val-aux/grpo_convert/reward/worst@16/mean:-0.5 - val-aux/grpo_convert/reward/worst@16/std:0.0 - val-aux/grpo_convert/reward/best@32/mean:1.04475 - val-aux/grpo_convert/reward/best@32/std:0.463457710620411 - val-aux/grpo_convert/reward/worst@32/mean:-0.5 - val-aux/grpo_convert/reward/worst@32/std:0.0 - val-aux/grpo_convert/reward/best@50/mean:1.183 - val-aux/grpo_convert/reward/best@50/std:0.24719441115907892 - val-aux/grpo_convert/reward/worst@50/mean:-0.5 - val-aux/grpo_convert/reward/worst@50/std:0.0 - val-aux/grpo_convert/score/mean@50:-0.38 - val-aux/grpo_convert/score/std@50:0.4160035150400291 - val-aux/grpo_convert/score/best@2/mean:-0.2515 - val-aux/grpo_convert/score/best@2/std:0.5725254982057535 - val-aux/grpo_convert/score/worst@2/mean:-0.49224999999999997 - val-aux/grpo_convert/score/worst@2/std:0.09744237482638723 - val-aux/grpo_convert/score/best@4/mean:-0.045750000000000006 - val-aux/grpo_convert/score/best@4/std:0.719362689680157 - val-aux/grpo_convert/score/worst@4/mean:-0.4995 - val-aux/grpo_convert/score/worst@4/std:0.015803480629279113 - val-aux/grpo_convert/score/best@8/mean:0.27649999999999997 - val-aux/grpo_convert/score/best@8/std:0.8019750970928194 - val-aux/grpo_convert/score/worst@8/mean:-0.5 - val-aux/grpo_convert/score/worst@8/std:0.0 - val-aux/grpo_convert/score/best@16/mean:0.68425 - val-aux/grpo_convert/score/best@16/std:0.7305309336667452 - val-aux/grpo_convert/score/worst@16/mean:-0.5 - val-aux/grpo_convert/score/worst@16/std:0.0 - val-aux/grpo_convert/score/best@32/mean:1.04475 - val-aux/grpo_convert/score/best@32/std:0.463457710620411 - val-aux/grpo_convert/score/worst@32/mean:-0.5 - val-aux/grpo_convert/score/worst@32/std:0.0 - val-aux/grpo_convert/score/best@50/mean:1.183 - val-aux/grpo_convert/score/best@50/std:0.24719441115907892 - val-aux/grpo_convert/score/worst@50/mean:-0.5 - val-aux/grpo_convert/score/worst@50/std:0.0 - val-aux/grpo_convert/structure/mean@50:-0.42 - val-aux/grpo_convert/structure/std@50:0.2712931993250107 - val-aux/grpo_convert/structure/best@2/mean:-0.3345 - val-aux/grpo_convert/structure/best@2/std:0.37162572179328507 - val-aux/grpo_convert/structure/worst@2/mean:-0.4935 - val-aux/grpo_convert/structure/worst@2/std:0.07980895485180488 - val-aux/grpo_convert/structure/best@4/mean:-0.20350000000000001 - val-aux/grpo_convert/structure/best@4/std:0.4567111267392585 - val-aux/grpo_convert/structure/worst@4/mean:-0.4995 - val-aux/grpo_convert/structure/worst@4/std:0.015803480629279113 - val-aux/grpo_convert/structure/best@8/mean:-0.006 - val-aux/grpo_convert/structure/best@8/std:0.49947965940437505 - val-aux/grpo_convert/structure/worst@8/mean:-0.5 - val-aux/grpo_convert/structure/worst@8/std:0.0 - val-aux/grpo_convert/structure/best@16/mean:0.2435 - val-aux/grpo_convert/structure/best@16/std:0.4365024000102831 - val-aux/grpo_convert/structure/worst@16/mean:-0.5 - val-aux/grpo_convert/structure/worst@16/std:0.0 - val-aux/grpo_convert/structure/best@32/mean:0.433 - val-aux/grpo_convert/structure/best@32/std:0.2492170333788084 - val-aux/grpo_convert/structure/worst@32/mean:-0.5 - val-aux/grpo_convert/structure/worst@32/std:0.0 - val-aux/grpo_convert/structure/best@50/mean:0.4875 - val-aux/grpo_convert/structure/best@50/std:0.10917763145507442 - val-aux/grpo_convert/structure/worst@50/mean:-0.5 - val-aux/grpo_convert/structure/worst@50/std:0.0 - val-aux/grpo_convert/boxed/mean@50:0.02 - val-aux/grpo_convert/boxed/std@50:0.06782329983125268 - val-aux/grpo_convert/boxed/best@2/mean:0.041 - val-aux/grpo_convert/boxed/best@2/std:0.09256889326334197 - val-aux/grpo_convert/boxed/worst@2/mean:0.00125 - val-aux/grpo_convert/boxed/worst@2/std:0.017633419974582357 - val-aux/grpo_convert/boxed/best@4/mean:0.07375 - val-aux/grpo_convert/boxed/best@4/std:0.1140106902882357 - val-aux/grpo_convert/boxed/worst@4/mean:0.0 - val-aux/grpo_convert/boxed/worst@4/std:0.0 - val-aux/grpo_convert/boxed/best@8/mean:0.129 - val-aux/grpo_convert/boxed/best@8/std:0.124935983607606 - val-aux/grpo_convert/boxed/worst@8/mean:0.0 - val-aux/grpo_convert/boxed/worst@8/std:0.0 - val-aux/grpo_convert/boxed/best@16/mean:0.18875 - val-aux/grpo_convert/boxed/best@16/std:0.10752180011513945 - val-aux/grpo_convert/boxed/worst@16/mean:0.0 - val-aux/grpo_convert/boxed/worst@16/std:0.0 - val-aux/grpo_convert/boxed/best@32/mean:0.23575 - val-aux/grpo_convert/boxed/best@32/std:0.05796065475820646 - val-aux/grpo_convert/boxed/worst@32/mean:0.0 - val-aux/grpo_convert/boxed/worst@32/std:0.0 - val-aux/grpo_convert/boxed/best@50/mean:0.248 - val-aux/grpo_convert/boxed/best@50/std:0.022271057451320086 - val-aux/grpo_convert/boxed/worst@50/mean:0.0 - val-aux/grpo_convert/boxed/worst@50/std:0.0 - val-aux/grpo_convert/correct/mean@50:0.02 - val-aux/grpo_convert/correct/std@50:0.09797958971132714 - val-aux/grpo_convert/correct/best@2/mean:0.042 - val-aux/grpo_convert/correct/best@2/std:0.13869390758068645 - val-aux/grpo_convert/correct/worst@2/mean:0.0 - val-aux/grpo_convert/correct/worst@2/std:0.0 - val-aux/grpo_convert/correct/best@4/mean:0.084 - val-aux/grpo_convert/correct/best@4/std:0.18693314312876674 - val-aux/grpo_convert/correct/worst@4/mean:0.0 - val-aux/grpo_convert/correct/worst@4/std:0.0 - val-aux/grpo_convert/correct/best@8/mean:0.1535 - val-aux/grpo_convert/correct/best@8/std:0.2306246951217497 - val-aux/grpo_convert/correct/worst@8/mean:0.0 - val-aux/grpo_convert/correct/worst@8/std:0.0 - val-aux/grpo_convert/correct/best@16/mean:0.252 - val-aux/grpo_convert/correct/best@16/std:0.2499919998719959 - val-aux/grpo_convert/correct/worst@16/mean:0.0 - val-aux/grpo_convert/correct/worst@16/std:0.0 - val-aux/grpo_convert/correct/best@32/mean:0.376 - val-aux/grpo_convert/correct/best@32/std:0.21592591322025242 - val-aux/grpo_convert/correct/worst@32/mean:0.0 - val-aux/grpo_convert/correct/worst@32/std:0.0 - val-aux/grpo_convert/correct/best@50/mean:0.4475 - val-aux/grpo_convert/correct/best@50/std:0.1532767105596933 - val-aux/grpo_convert/correct/worst@50/mean:0.0 - val-aux/grpo_convert/correct/worst@50/std:0.0 - val-core/grpo_convert/acc/mean@50:0.02 - val-aux/grpo_convert/acc/std@50:0.09797958971132714 - val-aux/grpo_convert/acc/best@2/mean:0.042 - val-aux/grpo_convert/acc/best@2/std:0.13869390758068645 - val-aux/grpo_convert/acc/worst@2/mean:0.0 - val-aux/grpo_convert/acc/worst@2/std:0.0 - val-aux/grpo_convert/acc/best@4/mean:0.084 - val-aux/grpo_convert/acc/best@4/std:0.18693314312876674 - val-aux/grpo_convert/acc/worst@4/mean:0.0 - val-aux/grpo_convert/acc/worst@4/std:0.0 - val-aux/grpo_convert/acc/best@8/mean:0.1535 - val-aux/grpo_convert/acc/best@8/std:0.2306246951217497 - val-aux/grpo_convert/acc/worst@8/mean:0.0 - val-aux/grpo_convert/acc/worst@8/std:0.0 - val-aux/grpo_convert/acc/best@16/mean:0.252 - val-aux/grpo_convert/acc/best@16/std:0.2499919998719959 - val-aux/grpo_convert/acc/worst@16/mean:0.0 - val-aux/grpo_convert/acc/worst@16/std:0.0 - val-aux/grpo_convert/acc/best@32/mean:0.376 - val-aux/grpo_convert/acc/best@32/std:0.21592591322025242 - val-aux/grpo_convert/acc/worst@32/mean:0.0 - val-aux/grpo_convert/acc/worst@32/std:0.0 - val-core/grpo_convert/acc/best@50/mean:0.4475 - val-core/grpo_convert/acc/best@50/std:0.1532767105596933 - val-aux/grpo_convert/acc/worst@50/mean:0.0 - val-aux/grpo_convert/acc/worst@50/std:0.0[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   0%|          | 0/230 [00:00<?, ?it/s]
+[36m(WorkerDict pid=2987386)[0m /usr/local/lib/python3.10/dist-packages/torch/distributed/fsdp/fully_sharded_data_parallel.py:690: FutureWarning: FSDP.state_dict_type() and FSDP.set_state_dict_type() are being deprecated. Please use APIs, get_state_dict() and set_state_dict(), which can support different parallelisms, FSDP1, FSDP2, DDP. API doc: https://pytorch.org/docs/stable/distributed.checkpoint.html#torch.distributed.checkpoint.state_dict.get_state_dict .Tutorial: https://pytorch.org/tutorials/recipes/distributed_checkpoint_recipe.html .[32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=2987386)[0m   warnings.warn([32m [repeated 7x across cluster][0m
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   0%|          | 1/230 [01:18<4:59:20, 78.43s/it]
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   1%|          | 2/230 [02:03<3:44:12, 59.00s/it]
+[36m(TaskRunner pid=2985779)[0m /gemini/user/private/table_reasoning/zhaiyanbo/verl/recipe/dapo/dapo_ray_trainer.py:326: FutureWarning: Warning: Function 'verl.trainer.ppo.metric_utils.reduce_metrics' is deprecated. Please use 'verl.utils.metric.reduce_metrics' instead.
+[36m(TaskRunner pid=2985779)[0m   actor_output_metrics = reduce_metrics(actor_output.meta_info["metrics"])
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   1%|▏         | 3/230 [05:04<7:12:58, 114.44s/it]
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   2%|▏         | 4/230 [05:54<5:36:04, 89.22s/it] 
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   2%|▏         | 5/230 [08:12<6:40:17, 106.74s/it]
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   3%|▎         | 6/230 [09:00<5:23:10, 86.57s/it] 
+
+[36m(TaskRunner pid=2985779)[0m num_prompt_in_batch=21 < prompt_bsz=32
+[36m(TaskRunner pid=2985779)[0m num_gen_batches=1. Keep generating...
+[36m(TaskRunner pid=2985779)[0m num_prompt_in_batch=31 < prompt_bsz=32
+[36m(TaskRunner pid=2985779)[0m num_gen_batches=2. Keep generating...
+[36m(TaskRunner pid=2985779)[0m batch.non_tensor_batch 15 dict_keys(['type', 'data_source', 'ability', 'reward_model', 'extra_info', 'multi_modal_inputs', 'index', 'tools_kwargs', 'interaction_kwargs', 'uid', 'score', 'structure', 'boxed', 'correct', 'acc'])
+[36m(TaskRunner pid=2985779)[0m metrics {'critic/score/mean': -0.04296875, 'critic/score/max': 2.0, 'critic/score/min': -0.5, 'critic/rewards/mean': -0.04296875, 'critic/rewards/max': 2.0, 'critic/rewards/min': -0.5, 'critic/advantages/mean': -0.03963891789317131, 'critic/advantages/max': 2.4748709201812744, 'critic/advantages/min': -0.698595404624939, 'critic/returns/mean': -0.03963891789317131, 'critic/returns/max': 2.4748709201812744, 'critic/returns/min': -0.698595404624939, 'response_length/mean': 320.00390625, 'response_length/max': 1066.0, 'response_length/min': 10.0, 'response_length/clip_ratio': 0.0, 'prompt_length/mean': 407.4375, 'prompt_length/max': 414.0, 'prompt_length/min': 407.0, 'prompt_length/clip_ratio': 0.0, 'train-reward/score/mean': -0.04296875, 'train-acc/score/ratio': 0.0}
+[36m(TaskRunner pid=2985779)[0m group_metrics {'train-acc/group_all_correct/ratio': 0.0, 'train-acc/group_any_correct/ratio': 0.0, 'train-acc/group_all_wrong/ratio': 1.0}
+[36m(TaskRunner pid=2985779)[0m step:1 - global_seqlen/min:19414 - global_seqlen/max:27938 - global_seqlen/minmax_diff:8524 - global_seqlen/balanced_min:23278 - global_seqlen/balanced_max:23279 - global_seqlen/mean:23278.125 - actor/entropy:0.7445989847183228 - actor/pg_loss:0.0389006162683169 - actor/pg_clipfrac:4.8968153957199924e-05 - actor/ppo_kl:-3.43571280912632e-05 - actor/pg_clipfrac_lower:0.0 - actor/grad_norm:1.7459915280342102 - perf/mfu/actor:0.03428825436237251 - perf/max_memory_allocated_gb:67.70817470550537 - perf/max_memory_reserved_gb:75.57421875 - perf/cpu_memory_used_gb:100.19141387939453 - actor/lr:0.0 - critic/score/mean:-0.04296875 - critic/score/max:2.0 - critic/score/min:-0.5 - critic/rewards/mean:-0.04296875 - critic/rewards/max:2.0 - critic/rewards/min:-0.5 - critic/advantages/mean:-0.03963891789317131 - critic/advantages/max:2.4748709201812744 - critic/advantages/min:-0.698595404624939 - critic/returns/mean:-0.03963891789317131 - critic/returns/max:2.4748709201812744 - critic/returns/min:-0.698595404624939 - response_length/mean:320.00390625 - response_length/max:1066.0 - response_length/min:10.0 - response_length/clip_ratio:0.0 - prompt_length/mean:407.4375 - prompt_length/max:414.0 - prompt_length/min:407.0 - prompt_length/clip_ratio:0.0 - train-reward/score/mean:-0.04296875 - train-acc/score/ratio:0.0 - train-acc/group_all_correct/ratio:0.0 - train-acc/group_any_correct/ratio:0.0 - train-acc/group_all_wrong/ratio:1.0 - timing_s/start_profile:0.0005011670291423798 - timing_s/generate_sequences:97.91121673583984 - timing_s/reshard:0.7100669145584106 - timing_s/gen:242.1810469198972 - timing_s/reward:0.7061207350343466 - timing_s/step:299.9502383247018 - timing_s/old_log_prob:34.03911690413952 - timing_s/adv:0.006499556824564934 - timing_s/update_actor:22.90429236739874 - timing_s/stop_profile:4.2650848627090454e-05 - timing_per_token_ms/adv:3.49016341767482e-05 - timing_per_token_ms/gen:2.9562755205612383 - timing_per_token_ms/update_actor:0.12299257547267413 - perf/total_num_tokens:186225 - perf/time_per_step:299.9502383247018 - perf/throughput:77.60662278521343 - train/num_gen_batches:3
+[36m(TaskRunner pid=2985779)[0m num_prompt_in_batch=17 < prompt_bsz=32
+[36m(TaskRunner pid=2985779)[0m num_gen_batches=1. Keep generating...
+[36m(TaskRunner pid=2985779)[0m batch.non_tensor_batch 15 dict_keys(['type', 'data_source', 'ability', 'reward_model', 'extra_info', 'multi_modal_inputs', 'index', 'tools_kwargs', 'interaction_kwargs', 'uid', 'score', 'structure', 'boxed', 'correct', 'acc'])
+[36m(TaskRunner pid=2985779)[0m metrics {'critic/score/mean': 0.009765625, 'critic/score/max': 2.0, 'critic/score/min': -0.5, 'critic/rewards/mean': 0.009765625, 'critic/rewards/max': 2.0, 'critic/rewards/min': -0.5, 'critic/advantages/mean': 0.001694877166301012, 'critic/advantages/max': 2.4748709201812744, 'critic/advantages/min': -0.935413658618927, 'critic/returns/mean': 0.001694877166301012, 'critic/returns/max': 2.4748709201812744, 'critic/returns/min': -0.935413658618927, 'response_length/mean': 296.6328125, 'response_length/max': 1399.0, 'response_length/min': 13.0, 'response_length/clip_ratio': 0.0, 'prompt_length/mean': 408.09375, 'prompt_length/max': 414.0, 'prompt_length/min': 407.0, 'prompt_length/clip_ratio': 0.0, 'train-reward/score/mean': 0.009765625, 'train-acc/score/ratio': 0.0}
+[36m(TaskRunner pid=2985779)[0m group_metrics {'train-acc/group_all_correct/ratio': 0.0, 'train-acc/group_any_correct/ratio': 0.0, 'train-acc/group_all_wrong/ratio': 1.0}
+[36m(TaskRunner pid=2985779)[0m step:2 - global_seqlen/min:20204 - global_seqlen/max:24149 - global_seqlen/minmax_diff:3945 - global_seqlen/balanced_min:22520 - global_seqlen/balanced_max:22756 - global_seqlen/mean:22551.25 - actor/entropy:0.8201696276664734 - actor/pg_loss:-0.0016427113053699334 - actor/pg_clipfrac:0.0004485545602316658 - actor/ppo_kl:-6.259533377791134e-05 - actor/pg_clipfrac_lower:0.0 - actor/grad_norm:1.2937808632850647 - perf/mfu/actor:0.03349473431848594 - perf/max_memory_allocated_gb:67.70817470550537 - perf/max_memory_reserved_gb:75.765625 - perf/cpu_memory_used_gb:105.6788330078125 - actor/lr:1e-07 - critic/score/mean:0.009765625 - critic/score/max:2.0 - critic/score/min:-0.5 - critic/rewards/mean:0.009765625 - critic/rewards/max:2.0 - critic/rewards/min:-0.5 - critic/advantages/mean:0.001694877166301012 - critic/advantages/max:2.4748709201812744 - critic/advantages/min:-0.935413658618927 - critic/returns/mean:0.001694877166301012 - critic/returns/max:2.4748709201812744 - critic/returns/min:-0.935413658618927 - response_length/mean:296.6328125 - response_length/max:1399.0 - response_length/min:13.0 - response_length/clip_ratio:0.0 - prompt_length/mean:408.09375 - prompt_length/max:414.0 - prompt_length/min:407.0 - prompt_length/clip_ratio:0.0 - train-reward/score/mean:0.009765625 - train-acc/score/ratio:0.0 - train-acc/group_all_correct/ratio:0.0 - train-acc/group_any_correct/ratio:0.0 - train-acc/group_all_wrong/ratio:1.0 - timing_s/start_profile:0.00015704147517681122 - timing_s/generate_sequences:96.23406219482422 - timing_s/reshard:0.6881144046783447 - timing_s/gen:157.35766183398664 - timing_s/reward:1.0871467683464289 - timing_s/step:188.0133905056864 - timing_s/old_log_prob:9.792167957872152 - timing_s/adv:0.006284009665250778 - timing_s/update_actor:19.713889215141535 - timing_s/stop_profile:5.535222589969635e-05 - timing_per_token_ms/adv:3.483182564852712e-05 - timing_per_token_ms/gen:2.072186017988183 - timing_per_token_ms/update_actor:0.10927270780522995 - perf/total_num_tokens:180410 - perf/time_per_step:188.0133905056864 - perf/throughput:119.94491423906291 - train/num_gen_batches:2
+[36m(TaskRunner pid=2985779)[0m num_prompt_in_batch=18 < prompt_bsz=32
+[36m(TaskRunner pid=2985779)[0m num_gen_batches=1. Keep generating...
+[36m(TaskRunner pid=2985779)[0m batch.non_tensor_batch 
+[36m(TaskRunner pid=2985779)[0m 15 
+[36m(TaskRunner pid=2985779)[0m dict_keys(['type', 'data_source', 'ability', 'reward_model', 'extra_info', 'multi_modal_inputs', 'index', 'tools_kwargs', 'interaction_kwargs', 'uid', 'score', 'structure', 'boxed', 'correct', 'acc'])
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   3%|▎         | 7/230 [11:12<6:17:51, 101.67s/it]
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   3%|▎         | 8/230 [12:07<5:20:41, 86.67s/it] 
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   4%|▍         | 9/230 [13:48<5:36:21, 91.32s/it]
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   4%|▍         | 10/230 [15:09<5:23:11, 88.14s/it]
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   5%|▍         | 11/230 [16:00<4:39:35, 76.60s/it]
+[36m(TaskRunner pid=2985779)[0m metrics {'critic/score/mean': -0.021484375, 'critic/score/max': 2.0, 'critic/score/min': -0.5, 'critic/rewards/mean': -0.021484375, 'critic/rewards/max': 2.0, 'critic/rewards/min': -0.5, 'critic/advantages/mean': -0.09163056313991547, 'critic/advantages/max': 2.4748709201812744, 'critic/advantages/min': -0.8452044129371643, 'critic/returns/mean': -0.09163056313991547, 'critic/returns/max': 2.4748709201812744, 'critic/returns/min': -0.8452044129371643, 'response_length/mean': 282.4609375, 'response_length/max': 1131.0, 'response_length/min': 10.0, 'response_length/clip_ratio': 0.0, 'prompt_length/mean': 407.875, 'prompt_length/max': 414.0, 'prompt_length/min': 407.0, 'prompt_length/clip_ratio': 0.0, 'train-reward/score/mean': -0.021484375, 'train-acc/score/ratio': 0.0}
+[36m(TaskRunner pid=2985779)[0m group_metrics {'train-acc/group_all_correct/ratio': 0.0, 'train-acc/group_any_correct/ratio': 0.0, 'train-acc/group_all_wrong/ratio': 1.0}
+[36m(TaskRunner pid=2985779)[0m step:3 - global_seqlen/min:20204 - global_seqlen/max:23970 - global_seqlen/minmax_diff:3766 - global_seqlen/balanced_min:22088 - global_seqlen/balanced_max:22092 - global_seqlen/mean:22090.75 - actor/entropy:0.8993055820465088 - actor/pg_loss:0.0909302644431591 - actor/pg_clipfrac:0.0006356945959851146 - actor/ppo_kl:7.829274788188437e-06 - actor/pg_clipfrac_lower:0.0 - actor/grad_norm:1.5298935770988464 - perf/mfu/actor:0.03312041731717572 - perf/max_memory_allocated_gb:67.70817470550537 - perf/max_memory_reserved_gb:75.765625 - perf/cpu_memory_used_gb:109.99278259277344 - actor/lr:2e-07 - critic/score/mean:-0.021484375 - critic/score/max:2.0 - critic/score/min:-0.5 - critic/rewards/mean:-0.021484375 - critic/rewards/max:2.0 - critic/rewards/min:-0.5 - critic/advantages/mean:-0.09163056313991547 - critic/advantages/max:2.4748709201812744 - critic/advantages/min:-0.8452044129371643 - critic/returns/mean:-0.09163056313991547 - critic/returns/max:2.4748709201812744 - critic/returns/min:-0.8452044129371643 - response_length/mean:282.4609375 - response_length/max:1131.0 - response_length/min:10.0 - response_length/clip_ratio:0.0 - prompt_length/mean:407.875 - prompt_length/max:414.0 - prompt_length/min:407.0 - prompt_length/clip_ratio:0.0 - train-reward/score/mean:-0.021484375 - train-acc/score/ratio:0.0 - train-acc/group_all_correct/ratio:0.0 - train-acc/group_any_correct/ratio:0.0 - train-acc/group_all_wrong/ratio:1.0 - timing_s/start_profile:0.00024141930043697357 - timing_s/generate_sequences:71.87738800048828 - timing_s/reshard:0.7049809098243713 - timing_s/gen:149.30804177373648 - timing_s/reward:0.47115611284971237 - timing_s/step:179.73963100276887 - timing_s/old_log_prob:10.260086560621858 - timing_s/adv:0.00627540610730648 - timing_s/update_actor:19.639323053881526 - timing_s/stop_profile:5.245022475719452e-05 - timing_per_token_ms/adv:3.550924090007401e-05 - timing_per_token_ms/gen:2.064832551151106 - timing_per_token_ms/update_actor:0.11112865709562558 - perf/total_num_tokens:176726 - perf/time_per_step:179.73963100276887 - perf/throughput:122.90416908477849 - train/num_gen_batches:2
+[36m(TaskRunner pid=2985779)[0m num_prompt_in_batch=14 < prompt_bsz=32
+[36m(TaskRunner pid=2985779)[0m num_gen_batches=1. Keep generating...
+[36m(TaskRunner pid=2985779)[0m batch.non_tensor_batch 15 dict_keys(['type', 'data_source', 'ability', 'reward_model', 'extra_info', 'multi_modal_inputs', 'index', 'tools_kwargs', 'interaction_kwargs', 'uid', 'score', 'structure', 'boxed', 'correct', 'acc'])
+[36m(TaskRunner pid=2985779)[0m metrics {'critic/score/mean': -0.033203125, 'critic/score/max': 2.0, 'critic/score/min': -0.5, 'critic/rewards/mean': -0.033203125, 'critic/rewards/max': 2.0, 'critic/rewards/min': -0.5, 'critic/advantages/mean': -0.03270174190402031, 'critic/advantages/max': 2.4748709201812744, 'critic/advantages/min': -0.935413658618927, 'critic/returns/mean': -0.03270174190402031, 'critic/returns/max': 2.4748709201812744, 'critic/returns/min': -0.935413658618927, 'response_length/mean': 296.46875, 'response_length/max': 754.0, 'response_length/min': 10.0, 'response_length/clip_ratio': 0.0, 'prompt_length/mean': 407.875, 'prompt_length/max': 414.0, 'prompt_length/min': 407.0, 'prompt_length/clip_ratio': 0.0, 'train-reward/score/mean': -0.033203125, 'train-acc/score/ratio': 0.0}
+[36m(TaskRunner pid=2985779)[0m group_metrics {'train-acc/group_all_correct/ratio': 0.0, 'train-acc/group_any_correct/ratio': 0.0, 'train-acc/group_all_wrong/ratio': 1.0}
+[36m(TaskRunner pid=2985779)[0m step:4 - global_seqlen/min:20393 - global_seqlen/max:24190 - global_seqlen/minmax_diff:3797 - global_seqlen/balanced_min:22539 - global_seqlen/balanced_max:22539 - global_seqlen/mean:22539.0 - actor/entropy:0.8089614510536194 - actor/pg_loss:0.031659506261348724 - actor/pg_clipfrac:0.000539584793538476 - actor/ppo_kl:-9.829267643605515e-05 - actor/pg_clipfrac_lower:0.0 - actor/grad_norm:1.5738887786865234 - perf/mfu/actor:0.03247581899449656 - perf/max_memory_allocated_gb:67.70817470550537 - perf/max_memory_reserved_gb:78.94140625 - perf/cpu_memory_used_gb:114.83262252807617 - actor/lr:3e-07 - critic/score/mean:-0.033203125 - critic/score/max:2.0 - critic/score/min:-0.5 - critic/rewards/mean:-0.033203125 - critic/rewards/max:2.0 - critic/rewards/min:-0.5 - critic/advantages/mean:-0.03270174190402031 - critic/advantages/max:2.4748709201812744 - critic/advantages/min:-0.935413658618927 - critic/returns/mean:-0.03270174190402031 - critic/returns/max:2.4748709201812744 - critic/returns/min:-0.935413658618927 - response_length/mean:296.46875 - response_length/max:754.0 - response_length/min:10.0 - response_length/clip_ratio:0.0 - prompt_length/mean:407.875 - prompt_length/max:414.0 - prompt_length/min:407.0 - prompt_length/clip_ratio:0.0 - train-reward/score/mean:-0.033203125 - train-acc/score/ratio:0.0 - train-acc/group_all_correct/ratio:0.0 - train-acc/group_any_correct/ratio:0.0 - train-acc/group_all_wrong/ratio:1.0 - timing_s/start_profile:0.00025920942425727844 - timing_s/generate_sequences:57.470577239990234 - timing_s/reshard:0.7097355127334595 - timing_s/gen:123.71952191926539 - timing_s/reward:0.4832756984978914 - timing_s/step:154.59955295361578 - timing_s/old_log_prob:10.597249580547214 - timing_s/adv:0.00630013644695282 - timing_s/update_actor:19.738121835514903 - timing_s/stop_profile:5.2873045206069946e-05 - timing_per_token_ms/adv:3.494019503390135e-05 - timing_per_token_ms/gen:1.630119135649644 - timing_per_token_ms/update_actor:0.10946649050265597 - perf/total_num_tokens:180312 - perf/time_per_step:154.59955295361578 - perf/throughput:145.78955481690386 - train/num_gen_batches:2
+[36m(TaskRunner pid=2985779)[0m num_prompt_in_batch=12 < prompt_bsz=32
+[36m(TaskRunner pid=2985779)[0m num_gen_batches=1. Keep generating...
+[36m(TaskRunner pid=2985779)[0m num_prompt_in_batch=29 < prompt_bsz=32
+[36m(TaskRunner pid=2985779)[0m num_gen_batches=2. Keep generating...
+[36m(TaskRunner pid=2985779)[0m batch.non_tensor_batch 15 dict_keys(['type', 'data_source', 'ability', 'reward_model', 'extra_info', 'multi_modal_inputs', 'index', 'tools_kwargs', 'interaction_kwargs', 'uid', 'score', 'structure', 'boxed', 'correct', 'acc'])
+[36m(TaskRunner pid=2985779)[0m metrics {'critic/score/mean': -0.005859375, 'critic/score/max': 2.0, 'critic/score/min': -0.5, 'critic/rewards/mean': -0.005859375, 'critic/rewards/max': 2.0, 'critic/rewards/min': -0.5, 'critic/advantages/mean': -0.030491279438138008, 'critic/advantages/max': 2.4748709201812744, 'critic/advantages/min': -0.935413658618927, 'critic/returns/mean': -0.030491279438138008, 'critic/returns/max': 2.4748709201812744, 'critic/returns/min': -0.935413658618927, 'response_length/mean': 292.52734375, 'response_length/max': 1095.0, 'response_length/min': 10.0, 'response_length/clip_ratio': 0.0, 'prompt_length/mean': 407.21875, 'prompt_length/max': 414.0, 'prompt_length/min': 407.0, 'prompt_length/clip_ratio': 0.0, 'train-reward/score/mean': -0.005859375, 'train-acc/score/ratio': 0.0}
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   5%|▌         | 12/230 [17:47<5:12:16, 85.95s/it]
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   6%|▌         | 13/230 [19:53<5:54:28, 98.01s/it]
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   6%|▌         | 14/230 [22:05<6:29:21, 108.16s/it]
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   7%|▋         | 15/230 [23:22<5:54:31, 98.94s/it] 
+[36m(TaskRunner pid=2985779)[0m group_metrics {'train-acc/group_all_correct/ratio': 0.0, 'train-acc/group_any_correct/ratio': 0.0, 'train-acc/group_all_wrong/ratio': 1.0}
+[36m(TaskRunner pid=2985779)[0m step:5 - global_seqlen/min:18680 - global_seqlen/max:25982 - global_seqlen/minmax_diff:7302 - global_seqlen/balanced_min:22391 - global_seqlen/balanced_max:22392 - global_seqlen/mean:22391.875 - actor/entropy:0.6995560526847839 - actor/pg_loss:0.029609203649063904 - actor/pg_clipfrac:0.000549121187456573 - actor/ppo_kl:-3.57575130086237e-05 - actor/pg_clipfrac_lower:0.0 - actor/grad_norm:1.8842561841011047 - perf/mfu/actor:0.03322105242007731 - perf/max_memory_allocated_gb:67.70817470550537 - perf/max_memory_reserved_gb:78.94140625 - perf/cpu_memory_used_gb:121.11381530761719 - actor/lr:4e-07 - critic/score/mean:-0.005859375 - critic/score/max:2.0 - critic/score/min:-0.5 - critic/rewards/mean:-0.005859375 - critic/rewards/max:2.0 - critic/rewards/min:-0.5 - critic/advantages/mean:-0.030491279438138008 - critic/advantages/max:2.4748709201812744 - critic/advantages/min:-0.935413658618927 - critic/returns/mean:-0.030491279438138008 - critic/returns/max:2.4748709201812744 - critic/returns/min:-0.935413658618927 - response_length/mean:292.52734375 - response_length/max:1095.0 - response_length/min:10.0 - response_length/clip_ratio:0.0 - prompt_length/mean:407.21875 - prompt_length/max:414.0 - prompt_length/min:407.0 - prompt_length/clip_ratio:0.0 - train-reward/score/mean:-0.005859375 - train-acc/score/ratio:0.0 - train-acc/group_all_correct/ratio:0.0 - train-acc/group_any_correct/ratio:0.0 - train-acc/group_all_wrong/ratio:1.0 - timing_s/start_profile:0.0003185868263244629 - timing_s/generate_sequences:71.03095245361328 - timing_s/reshard:0.7079096436500549 - timing_s/gen:206.91852379217744 - timing_s/reward:0.7539743650704622 - timing_s/step:238.33772304840386 - timing_s/old_log_prob:10.642549296841025 - timing_s/adv:0.006359819322824478 - timing_s/update_actor:19.94080602377653 - timing_s/stop_profile:4.7069042921066284e-05 - timing_per_token_ms/adv:3.550294092625382e-05 - timing_per_token_ms/gen:2.7630766861027607 - timing_per_token_ms/update_actor:0.11131719666048807 - perf/total_num_tokens:179135 - perf/time_per_step:238.33772304840386 - perf/throughput:93.95019266611206 - train/num_gen_batches:3
+[36m(TaskRunner pid=2985779)[0m num_prompt_in_batch=15 < prompt_bsz=32
+[36m(TaskRunner pid=2985779)[0m num_gen_batches=1. Keep generating...
+[36m(TaskRunner pid=2985779)[0m batch.non_tensor_batch 15 dict_keys(['type', 'data_source', 'ability', 'reward_model', 'extra_info', 'multi_modal_inputs', 'index', 'tools_kwargs', 'interaction_kwargs', 'uid', 'score', 'structure', 'boxed', 'correct', 'acc'])
+[36m(TaskRunner pid=2985779)[0m metrics {'critic/score/mean': 0.13187026977539062, 'critic/score/max': 2.0, 'critic/score/min': -0.7412109375, 'critic/rewards/mean': 0.13187026977539062, 'critic/rewards/max': 2.0, 'critic/rewards/min': -0.7412109375, 'critic/advantages/mean': -0.08029498904943466, 'critic/advantages/max': 2.4748709201812744, 'critic/advantages/min': -0.935413658618927, 'critic/returns/mean': -0.08029498904943466, 'critic/returns/max': 2.4748709201812744, 'critic/returns/min': -0.935413658618927, 'response_length/mean': 311.95703125, 'response_length/max': 3319.0, 'response_length/min': 10.0, 'response_length/clip_ratio': 0.0, 'prompt_length/mean': 407.875, 'prompt_length/max': 414.0, 'prompt_length/min': 407.0, 'prompt_length/clip_ratio': 0.0, 'train-reward/score/mean': 0.1328125, 'train-acc/score/ratio': 0.0}
+[36m(TaskRunner pid=2985779)[0m group_metrics {'train-acc/group_all_correct/ratio': 0.0, 'train-acc/group_any_correct/ratio': 0.0, 'train-acc/group_all_wrong/ratio': 1.0}
+[36m(TaskRunner pid=2985779)[0m step:6 - global_seqlen/min:20622 - global_seqlen/max:25202 - global_seqlen/minmax_diff:4580 - global_seqlen/balanced_min:22704 - global_seqlen/balanced_max:24755 - global_seqlen/mean:23034.625 - actor/entropy:0.7219766974449158 - actor/pg_loss:0.07931561985363562 - actor/pg_clipfrac:0.00045240902303097147 - actor/ppo_kl:-6.643103733949829e-05 - actor/pg_clipfrac_lower:0.0 - actor/grad_norm:1.2179580330848694 - perf/mfu/actor:0.03361294849166114 - perf/max_memory_allocated_gb:67.72294998168945 - perf/max_memory_reserved_gb:78.94140625 - perf/cpu_memory_used_gb:124.48836135864258 - actor/lr:5e-07 - critic/score/mean:0.13187026977539062 - critic/score/max:2.0 - critic/score/min:-0.7412109375 - critic/rewards/mean:0.13187026977539062 - critic/rewards/max:2.0 - critic/rewards/min:-0.7412109375 - critic/advantages/mean:-0.08029498904943466 - critic/advantages/max:2.4748709201812744 - critic/advantages/min:-0.935413658618927 - critic/returns/mean:-0.08029498904943466 - critic/returns/max:2.4748709201812744 - critic/returns/min:-0.935413658618927 - response_length/mean:311.95703125 - response_length/max:3319.0 - response_length/min:10.0 - response_length/clip_ratio:0.0 - prompt_length/mean:407.875 - prompt_length/max:414.0 - prompt_length/min:407.0 - prompt_length/clip_ratio:0.0 - train-reward/score/mean:0.1328125 - train-acc/score/ratio:0.0 - train-acc/group_all_correct/ratio:0.0 - train-acc/group_any_correct/ratio:0.0 - train-acc/group_all_wrong/ratio:1.0 - timing_s/start_profile:0.00017664581537246704 - timing_s/generate_sequences:69.53936767578125 - timing_s/reshard:0.6841920614242554 - timing_s/gen:226.15541185438633 - timing_s/reward:0.4718262255191803 - timing_s/step:257.20493910089135 - timing_s/old_log_prob:10.481745064258575 - timing_s/adv:0.006308130919933319 - timing_s/update_actor:20.03669061139226 - timing_s/stop_profile:4.9544498324394226e-05 - timing_per_token_ms/adv:3.423178649496855e-05 - timing_per_token_ms/gen:2.831863010159982 - timing_per_token_ms/update_actor:0.10873136968472603 - perf/total_num_tokens:184277 - perf/time_per_step:257.20493910089135 - perf/throughput:89.55747537555811 - train/num_gen_batches:2
+[36m(TaskRunner pid=2985779)[0m num_prompt_in_batch=26 < prompt_bsz=32
+[36m(TaskRunner pid=2985779)[0m num_gen_batches=1. Keep generating...
+[36m(TaskRunner pid=2985779)[0m batch.non_tensor_batch 15 dict_keys(['type', 'data_source', 'ability', 'reward_model', 'extra_info', 'multi_modal_inputs', 'index', 'tools_kwargs', 'interaction_kwargs', 'uid', 'score', 'structure', 'boxed', 'correct', 'acc'])
+[36m(TaskRunner pid=2985779)[0m metrics {'critic/score/mean': 0.0546875, 'critic/score/max': 2.0, 'critic/score/min': -0.5, 'critic/rewards/mean': 0.0546875, 'critic/rewards/max': 2.0, 'critic/rewards/min': -0.5, 'critic/advantages/mean': -0.08874203264713287, 'critic/advantages/max': 2.4748709201812744, 'critic/advantages/min': -0.9643802046775818, 'critic/returns/mean': -0.08874203264713287, 'critic/returns/max': 2.4748709201812744, 'critic/returns/min': -0.9643802046775818, 'response_length/mean': 282.02734375, 'response_length/max': 1003.0, 'response_length/min': 10.0, 'response_length/clip_ratio': 0.0, 'prompt_length/mean': 407.65625, 'prompt_length/max': 414.0, 'prompt_length/min': 407.0, 'prompt_length/clip_ratio': 0.0, 'train-reward/score/mean': 0.0546875, 'train-acc/score/ratio': 0.0}
+[36m(TaskRunner pid=2985779)[0m group_metrics {'train-acc/group_all_correct/ratio': 0.0, 'train-acc/group_any_correct/ratio': 0.0, 'train-acc/group_all_wrong/ratio': 1.0}
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   7%|▋         | 16/230 [24:56<5:47:39, 97.47s/it]
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   7%|▋         | 17/230 [26:17<5:28:09, 92.44s/it]
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   8%|▊         | 18/230 [27:54<5:31:49, 93.91s/it]
+[36m(TaskRunner pid=2985779)[0m step:7 - global_seqlen/min:19420 - global_seqlen/max:26019 - global_seqlen/minmax_diff:6599 - global_seqlen/balanced_min:22069 - global_seqlen/balanced_max:22070 - global_seqlen/mean:22069.875 - actor/entropy:0.7910754084587097 - actor/pg_loss:0.08949692438667019 - actor/pg_clipfrac:0.0005259519578733792 - actor/ppo_kl:8.0919065415704e-05 - actor/pg_clipfrac_lower:0.0 - actor/grad_norm:1.1915984451770782 - perf/mfu/actor:0.031370542923738615 - perf/max_memory_allocated_gb:67.72294998168945 - perf/max_memory_reserved_gb:78.94140625 - perf/cpu_memory_used_gb:125.16326141357422 - actor/lr:6e-07 - critic/score/mean:0.0546875 - critic/score/max:2.0 - critic/score/min:-0.5 - critic/rewards/mean:0.0546875 - critic/rewards/max:2.0 - critic/rewards/min:-0.5 - critic/advantages/mean:-0.08874203264713287 - critic/advantages/max:2.4748709201812744 - critic/advantages/min:-0.9643802046775818 - critic/returns/mean:-0.08874203264713287 - critic/returns/max:2.4748709201812744 - critic/returns/min:-0.9643802046775818 - response_length/mean:282.02734375 - response_length/max:1003.0 - response_length/min:10.0 - response_length/clip_ratio:0.0 - prompt_length/mean:407.65625 - prompt_length/max:414.0 - prompt_length/min:407.0 - prompt_length/clip_ratio:0.0 - train-reward/score/mean:0.0546875 - train-acc/score/ratio:0.0 - train-acc/group_all_correct/ratio:0.0 - train-acc/group_any_correct/ratio:0.0 - train-acc/group_all_wrong/ratio:1.0 - timing_s/start_profile:0.00020093657076358795 - timing_s/generate_sequences:52.615604400634766 - timing_s/reshard:0.833818256855011 - timing_s/gen:141.762999586761 - timing_s/reward:0.4724629074335098 - timing_s/step:171.233966127038 - timing_s/old_log_prob:10.072449266910553 - timing_s/adv:0.006325826048851013 - timing_s/update_actor:18.85797480121255 - timing_s/stop_profile:5.957670509815216e-05 - timing_per_token_ms/adv:3.5828397582966674e-05 - timing_per_token_ms/gen:1.9635036439114253 - timing_per_token_ms/update_actor:0.10680834622541219 - perf/total_num_tokens:176559 - perf/time_per_step:171.233966127038 - perf/throughput:128.8872499958707 - train/num_gen_batches:2
+[36m(TaskRunner pid=2985779)[0m num_prompt_in_batch=25 < prompt_bsz=32
+[36m(TaskRunner pid=2985779)[0m num_gen_batches=1. Keep generating...
+[36m(TaskRunner pid=2985779)[0m batch.non_tensor_batch 15 dict_keys(['type', 'data_source', 'ability', 'reward_model', 'extra_info', 'multi_modal_inputs', 'index', 'tools_kwargs', 'interaction_kwargs', 'uid', 'score', 'structure', 'boxed', 'correct', 'acc'])
+[36m(TaskRunner pid=2985779)[0m metrics {'critic/score/mean': 0.125, 'critic/score/max': 2.0, 'critic/score/min': -0.5, 'critic/rewards/mean': 0.125, 'critic/rewards/max': 2.0, 'critic/rewards/min': -0.5, 'critic/advantages/mean': -0.05287795141339302, 'critic/advantages/max': 2.4748709201812744, 'critic/advantages/min': -1.0210239887237549, 'critic/returns/mean': -0.05287795141339302, 'critic/returns/max': 2.4748709201812744, 'critic/returns/min': -1.0210239887237549, 'response_length/mean': 328.859375, 'response_length/max': 1988.0, 'response_length/min': 6.0, 'response_length/clip_ratio': 0.0, 'prompt_length/mean': 407.4375, 'prompt_length/max': 414.0, 'prompt_length/min': 407.0, 'prompt_length/clip_ratio': 0.0, 'train-reward/score/mean': 0.125, 'train-acc/score/ratio': 0.0}
+[36m(TaskRunner pid=2985779)[0m group_metrics {'train-acc/group_all_correct/ratio': 0.0, 'train-acc/group_any_correct/ratio': 0.0, 'train-acc/group_all_wrong/ratio': 1.0}
+[36m(TaskRunner pid=2985779)[0m step:8 - global_seqlen/min:21621 - global_seqlen/max:26761 - global_seqlen/minmax_diff:5140 - global_seqlen/balanced_min:23441 - global_seqlen/balanced_max:24078 - global_seqlen/mean:23561.5 - actor/entropy:0.798828125 - actor/pg_loss:0.05160245547691981 - actor/pg_clipfrac:0.0011773806230242674 - actor/ppo_kl:-6.941704062531547e-06 - actor/pg_clipfrac_lower:0.0 - actor/grad_norm:2.1306377053260803 - perf/mfu/actor:0.03428411027725145 - perf/max_memory_allocated_gb:67.79822301864624 - perf/max_memory_reserved_gb:78.94140625 - perf/cpu_memory_used_gb:125.5479621887207 - actor/lr:7e-07 - critic/score/mean:0.125 - critic/score/max:2.0 - critic/score/min:-0.5 - critic/rewards/mean:0.125 - critic/rewards/max:2.0 - critic/rewards/min:-0.5 - critic/advantages/mean:-0.05287795141339302 - critic/advantages/max:2.4748709201812744 - critic/advantages/min:-1.0210239887237549 - critic/returns/mean:-0.05287795141339302 - critic/returns/max:2.4748709201812744 - critic/returns/min:-1.0210239887237549 - response_length/mean:328.859375 - response_length/max:1988.0 - response_length/min:6.0 - response_length/clip_ratio:0.0 - prompt_length/mean:407.4375 - prompt_length/max:414.0 - prompt_length/min:407.0 - prompt_length/clip_ratio:0.0 - train-reward/score/mean:0.125 - train-acc/score/ratio:0.0 - train-acc/group_all_correct/ratio:0.0 - train-acc/group_any_correct/ratio:0.0 - train-acc/group_all_wrong/ratio:1.0 - timing_s/start_profile:0.000188315287232399 - timing_s/generate_sequences:52.77550506591797 - timing_s/reshard:0.7780182361602783 - timing_s/gen:147.0593525134027 - timing_s/reward:0.4889451302587986 - timing_s/step:177.11714744009078 - timing_s/old_log_prob:10.07710462063551 - timing_s/adv:0.006294852122664452 - timing_s/update_actor:19.428292207419872 - timing_s/stop_profile:5.40614128112793e-05 - timing_per_token_ms/adv:3.3395858299898413e-05 - timing_per_token_ms/gen:1.746797079315374 - timing_per_token_ms/update_actor:0.10307223758790757 - perf/total_num_tokens:188492 - perf/time_per_step:177.11714744009078 - perf/throughput:133.0277747837464 - train/num_gen_batches:2
+[36m(TaskRunner pid=2985779)[0m batch.non_tensor_batch 15 dict_keys(['type', 'data_source', 'ability', 'reward_model', 'extra_info', 'multi_modal_inputs', 'index', 'tools_kwargs', 'interaction_kwargs', 'uid', 'score', 'structure', 'boxed', 'correct', 'acc'])
+[36m(TaskRunner pid=2985779)[0m metrics {'critic/score/mean': 0.259765625, 'critic/score/max': 2.0, 'critic/score/min': -0.5, 'critic/rewards/mean': 0.259765625, 'critic/rewards/max': 2.0, 'critic/rewards/min': -0.5, 'critic/advantages/mean': -0.05927060544490814, 'critic/advantages/max': 2.4748709201812744, 'critic/advantages/min': -1.368935465812683, 'critic/returns/mean': -0.05927060544490814, 'critic/returns/max': 2.4748709201812744, 'critic/returns/min': -1.368935465812683, 'response_length/mean': 274.07421875, 'response_length/max': 952.0, 'response_length/min': 14.0, 'response_length/clip_ratio': 0.0, 'prompt_length/mean': 407.21875, 'prompt_length/max': 414.0, 'prompt_length/min': 407.0, 'prompt_length/clip_ratio': 0.0, 'train-reward/score/mean': 0.259765625, 'train-acc/score/ratio': 0.0}
+[36m(TaskRunner pid=2985779)[0m group_metrics {'train-acc/group_all_correct/ratio': 0.0, 'train-acc/group_any_correct/ratio': 0.0, 'train-acc/group_all_wrong/ratio': 1.0}
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   8%|▊         | 19/230 [29:56<5:59:38, 102.27s/it]
+[36m(WorkerDict pid=2987384)[0m INFO:2025-08-08 00:25:06,525:[Rank 1] Saved model to /gemini/platform/public/NLP/private/project_model/math/ckpts/DAPO-Qwen2.5-VL-Math/global_step_10/actor/model_world_size_8_rank_1.pt
+[36m(WorkerDict pid=2987386)[0m INFO:2025-08-08 00:25:10,831:[Rank 3] Saved optim to /gemini/platform/public/NLP/private/project_model/math/ckpts/DAPO-Qwen2.5-VL-Math/global_step_10/actor/optim_world_size_8_rank_3.pt
+[36m(WorkerDict pid=2987386)[0m INFO:2025-08-08 00:25:10,834:[Rank 3] Saved extra_state to /gemini/platform/public/NLP/private/project_model/math/ckpts/DAPO-Qwen2.5-VL-Math/global_step_10/actor/extra_state_world_size_8_rank_3.pt
+[36m(WorkerDict pid=2987120)[0m INFO:2025-08-08 00:25:11,549:[Rank 0] Saved model config and tokenizer class to /gemini/platform/public/NLP/private/project_model/math/ckpts/DAPO-Qwen2.5-VL-Math/global_step_10/actor/huggingface
+[36m(TaskRunner pid=2985779)[0m step:9 - global_seqlen/min:19114 - global_seqlen/max:24958 - global_seqlen/minmax_diff:5844 - global_seqlen/balanced_min:21801 - global_seqlen/balanced_max:21802 - global_seqlen/mean:21801.375 - actor/entropy:0.8157566785812378 - actor/pg_loss:0.05883493212362131 - actor/pg_clipfrac:0.000626089390910541 - actor/ppo_kl:3.0154459333668154e-05 - actor/pg_clipfrac_lower:0.0 - actor/grad_norm:1.3131401538848877 - perf/mfu/actor:0.032791460079305446 - perf/max_memory_allocated_gb:67.79822301864624 - perf/max_memory_reserved_gb:78.94140625 - perf/cpu_memory_used_gb:125.74709701538086 - actor/lr:8e-07 - critic/score/mean:0.259765625 - critic/score/max:2.0 - critic/score/min:-0.5 - critic/rewards/mean:0.259765625 - critic/rewards/max:2.0 - critic/rewards/min:-0.5 - critic/advantages/mean:-0.05927060544490814 - critic/advantages/max:2.4748709201812744 - critic/advantages/min:-1.368935465812683 - critic/returns/mean:-0.05927060544490814 - critic/returns/max:2.4748709201812744 - critic/returns/min:-1.368935465812683 - response_length/mean:274.07421875 - response_length/max:952.0 - response_length/min:14.0 - response_length/clip_ratio:0.0 - prompt_length/mean:407.21875 - prompt_length/max:414.0 - prompt_length/min:407.0 - prompt_length/clip_ratio:0.0 - train-reward/score/mean:0.259765625 - train-acc/score/ratio:0.0 - train-acc/group_all_correct/ratio:0.0 - train-acc/group_any_correct/ratio:0.0 - train-acc/group_all_wrong/ratio:1.0 - timing_s/start_profile:0.00010160170495510101 - timing_s/generate_sequences:75.3915023803711 - timing_s/reshard:0.811730146408081 - timing_s/gen:92.58533120155334 - timing_s/reward:0.23294042609632015 - timing_s/old_log_prob:9.497921692207456 - timing_s/adv:0.00616154819726944 - timing_s/update_actor:19.272526504471898 - timing_s/step:121.64403932914138 - timing_s/stop_profile:4.9151480197906494e-05 - timing_per_token_ms/adv:3.532774995424279e-05 - timing_per_token_ms/gen:1.3195748642668264 - timing_per_token_ms/update_actor:0.11050063645338826 - perf/total_num_tokens:174411 - perf/time_per_step:121.64403932914138 - perf/throughput:179.22271506465177 - train/num_gen_batches:1
+[36m(TaskRunner pid=2985779)[0m test_gen_batch meta info: {'eos_token_id': 151645, 'pad_token_id': 151643, 'recompute_log_prob': False, 'do_sample': True, 'validate': True, 'global_steps': 10}
+[36m(TaskRunner pid=2985779)[0m validation generation end
+[36m(TaskRunner pid=2985779)[0m [prompt] system
+[36m(TaskRunner pid=2985779)[0m You are a helpful assistant.
+[36m(TaskRunner pid=2985779)[0m user
+[36m(TaskRunner pid=2985779)[0m You are a math teacher and now you need to complete a math multiple-choice question. Please put The thinking process in <think> thinking process </think>, and put the final chosen option in <answer>The answer is \boxed{capitalized option}.</answer>.
+[36m(TaskRunner pid=2985779)[0m 
+[36m(TaskRunner pid=2985779)[0m Solve the problem in the image.
+[36m(TaskRunner pid=2985779)[0m assistant
+[36m(TaskRunner pid=2985779)[0m 
+[36m(TaskRunner pid=2985779)[0m [response] <think>
+[36m(TaskRunner pid=2985779)[0m The given information is that the hyperbola $C$ is centered at the origin and has foci on the $x$-axis. This means the hyperbola can be written in the form $\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1$ with $a = b$. The given parabola $y^2 = 16x$ has a focus at $(4, 0)$ and a directrix at $x = -4$. The hyperbola intersects this parabola at points $A$ and $B$ such that $|AB| = 4\sqrt{3}$. 
+[36m(TaskRunner pid=2985779)[0m 
+[36m(TaskRunner pid=2985779)[0m The distance from the focus of the parabola to the vertex of the hyperbola is $4$. Since the hyperbola and the parabola intersect at points $A$ and $B$, and knowing the properties of hyperbolas and parabolas, we can deduce the length of the real axis of the hyperbola. The length of the real axis of the hyperbola is $2a$, where $a$ is the semi-major axis of the hyperbola.
+[36m(TaskRunner pid=2985779)[0m 
+[36m(TaskRunner pid=2985779)[0m Since the hyperbola is centered at the origin and has foci on the $x$-axis, the distance from the center to each focus is $c$, where $c^2 = a^2 + b^2$. The hyperbola and the parabola intersect at points $A$ and $B$ such that $|AB| = 4\sqrt{3}$. This distance is related to the focal distance of the parabola, which is $4$. The hyperbola intersects the parabola at points such that the distance between these points is the same as the distance between the focus of the parabola and the directrix, which is $4$. This implies that the hyperbola is such that its real axis length is related to this distance.
+[36m(TaskRunner pid=2985779)[0m 
+[36m(TaskRunner pid=2985779)[0m Since the hyperbola is symmetric and the distance between the points of intersection is $4\sqrt{3}$, and knowing the properties of hyperbolas and parabolas, we can deduce that the real axis length of the hyperbola is $4$.
+[36m(TaskRunner pid=2985779)[0m 
+[36m(TaskRunner pid=2985779)[0m Therefore, the length of the real axis of the hyperbola is $2a = 4$.
+[36m(TaskRunner pid=2985779)[0m </think>
+[36m(TaskRunner pid=2985779)[0m <answer>The answer is \boxed{4}.</answer>
+[36m(TaskRunner pid=2985779)[0m [ground_truth] C
+[36m(TaskRunner pid=2985779)[0m [score] 0.5
+[36m(TaskRunner pid=2985779)[0m [structure] 0.5
+[36m(TaskRunner pid=2985779)[0m [boxed] 0.0
+[36m(TaskRunner pid=2985779)[0m [correct] 0.0
+[36m(TaskRunner pid=2985779)[0m [acc] False
+[36m(TaskRunner pid=2985779)[0m len reward_extra_infos_dict['reward']: 100
+[36m(TaskRunner pid=2985779)[0m len reward_extra_infos_dict['score']: 100
+[36m(TaskRunner pid=2985779)[0m len reward_extra_infos_dict['structure']: 100
+[36m(TaskRunner pid=2985779)[0m len reward_extra_infos_dict['boxed']: 100
+[36m(TaskRunner pid=2985779)[0m len reward_extra_infos_dict['correct']: 100
+[36m(TaskRunner pid=2985779)[0m len reward_extra_infos_dict['acc']: 100
+[36m(TaskRunner pid=2985779)[0m local_global_step_folder: /gemini/platform/public/NLP/private/project_model/math/ckpts/DAPO-Qwen2.5-VL-Math/global_step_10
+[36m(TaskRunner pid=2985779)[0m batch.non_tensor_batch 15 dict_keys(['type', 'data_source', 'ability', 'reward_model', 'extra_info', 'multi_modal_inputs', 'index', 'tools_kwargs', 'interaction_kwargs', 'uid', 'score', 'structure', 'boxed', 'correct', 'acc'])
+[36m(TaskRunner pid=2985779)[0m metrics {'critic/score/mean': 0.29296875, 'critic/score/max': 2.0, 'critic/score/min': -0.5, 'critic/rewards/mean': 0.29296875, 'critic/rewards/max': 2.0, 'critic/rewards/min': -0.5, 'critic/advantages/mean': -0.03813936188817024, 'critic/advantages/max': 2.4748709201812744, 'critic/advantages/min': -1.368935465812683, 'critic/returns/mean': -0.03813936188817024, 'critic/returns/max': 2.4748709201812744, 'critic/returns/min': -1.368935465812683, 'response_length/mean': 330.453125, 'response_length/max': 1618.0, 'response_length/min': 14.0, 'response_length/clip_ratio': 0.0, 'prompt_length/mean': 407.875, 'prompt_length/max': 414.0, 'prompt_length/min': 407.0, 'prompt_length/clip_ratio': 0.0, 'train-reward/score/mean': 0.29296875, 'train-acc/score/ratio': 0.0}
+[36m(TaskRunner pid=2985779)[0m group_metrics {'train-acc/group_all_correct/ratio': 0.0, 'train-acc/group_any_correct/ratio': 0.0, 'train-acc/group_all_wrong/ratio': 1.0}
+[36m(TaskRunner pid=2985779)[0m step:10 - global_seqlen/min:20934 - global_seqlen/max:27056 - global_seqlen/minmax_diff:6122 - global_seqlen/balanced_min:23626 - global_seqlen/balanced_max:23627 - global_seqlen/mean:23626.5 - actor/entropy:0.8065325021743774 - actor/pg_loss:0.03885760111734271 - actor/pg_clipfrac:0.0006639313105551992 - actor/ppo_kl:-9.340672628847338e-06 - actor/pg_clipfrac_lower:0.0 - actor/grad_norm:1.015038251876831 - perf/mfu/actor:0.033925103774656386 - perf/max_memory_allocated_gb:67.79822301864624 - perf/max_memory_reserved_gb:78.94140625 - perf/cpu_memory_used_gb:125.23291778564453 - actor/lr:9e-07 - val-aux/grpo_convert/reward/mean@50:0.575 - val-aux/grpo_convert/reward/std@50:0.8559475019311126 - val-aux/grpo_convert/reward/best@2/mean:1.0162499999999999 - val-aux/grpo_convert/reward/best@2/std:0.6795248627341027 - val-aux/grpo_convert/reward/worst@2/mean:0.13624999999999998 - val-aux/grpo_convert/reward/worst@2/std:0.7850641312102566 - val-aux/grpo_convert/reward/best@4/mean:1.3515 - val-aux/grpo_convert/reward/best@4/std:0.5068439469321697 - val-aux/grpo_convert/reward/worst@4/mean:-0.26225 - val-aux/grpo_convert/reward/worst@4/std:0.6516662195857114 - val-aux/grpo_convert/reward/best@8/mean:1.5735000000000001 - val-aux/grpo_convert/reward/best@8/std:0.3553668337238599 - val-aux/grpo_convert/reward/worst@8/mean:-0.5655 - val-aux/grpo_convert/reward/worst@8/std:0.490696665247084 - val-aux/grpo_convert/reward/best@16/mean:1.7217500000000001 - val-aux/grpo_convert/reward/best@16/std:0.2634187493326927 - val-aux/grpo_convert/reward/worst@16/mean:-0.79 - val-aux/grpo_convert/reward/worst@16/std:0.34571352134610295 - val-aux/grpo_convert/reward/best@32/mean:1.85725 - val-aux/grpo_convert/reward/best@32/std:0.22624088379424262 - val-aux/grpo_convert/reward/worst@32/mean:-0.9305 - val-aux/grpo_convert/reward/worst@32/std:0.1942619828295115 - val-aux/grpo_convert/reward/best@50/mean:1.935 - val-aux/grpo_convert/reward/best@50/std:0.16815171720800237 - val-aux/grpo_convert/reward/worst@50/mean:-0.9695 - val-aux/grpo_convert/reward/worst@50/std:0.11966515783635603 - val-aux/grpo_convert/score/mean@50:0.605 - val-aux/grpo_convert/score/std@50:0.8094155686354955 - val-aux/grpo_convert/score/best@2/mean:1.01825 - val-aux/grpo_convert/score/best@2/std:0.6742531334808988 - val-aux/grpo_convert/score/worst@2/mean:0.19474999999999998 - val-aux/grpo_convert/score/worst@2/std:0.7177810658300463 - val-aux/grpo_convert/score/best@4/mean:1.3515 - val-aux/grpo_convert/score/best@4/std:0.5068439469321697 - val-aux/grpo_convert/score/worst@4/mean:-0.14925 - val-aux/grpo_convert/score/worst@4/std:0.5491975872676138 - val-aux/grpo_convert/score/best@8/mean:1.5735000000000001 - val-aux/grpo_convert/score/best@8/std:0.3553668337238599 - val-aux/grpo_convert/score/worst@8/mean:-0.3715 - val-aux/grpo_convert/score/worst@8/std:0.32421359970141 - val-aux/grpo_convert/score/best@16/mean:1.7217500000000001 - val-aux/grpo_convert/score/best@16/std:0.2634187493326927 - val-aux/grpo_convert/score/worst@16/mean:-0.47750000000000004 - val-aux/grpo_convert/score/worst@16/std:0.10365206220813938 - val-aux/grpo_convert/score/best@32/mean:1.85725 - val-aux/grpo_convert/score/best@32/std:0.22624088379424262 - val-aux/grpo_convert/score/worst@32/mean:-0.499 - val-aux/grpo_convert/score/worst@32/std:0.022338307903688678 - val-aux/grpo_convert/score/best@50/mean:1.935 - val-aux/grpo_convert/score/best@50/std:0.16815171720800237 - val-aux/grpo_convert/score/worst@50/mean:-0.5 - val-aux/grpo_convert/score/worst@50/std:0.0 - val-aux/grpo_convert/structure/mean@50:0.22 - val-aux/grpo_convert/structure/std@50:0.4347869491132174 - val-aux/grpo_convert/structure/best@2/mean:0.41100000000000003 - val-aux/grpo_convert/structure/best@2/std:0.26615943442507006 - val-aux/grpo_convert/structure/worst@2/mean:0.027000000000000003 - val-aux/grpo_convert/structure/worst@2/std:0.4814480247160467 - val-aux/grpo_convert/structure/best@4/mean:0.489 - val-aux/grpo_convert/structure/best@4/std:0.08749553039771578 - val-aux/grpo_convert/structure/worst@4/mean:-0.1955 - val-aux/grpo_convert/structure/worst@4/std:0.4311671056753027 - val-aux/grpo_convert/structure/best@8/mean:0.5 - val-aux/grpo_convert/structure/best@8/std:0.0 - val-aux/grpo_convert/structure/worst@8/mean:-0.37749999999999995 - val-aux/grpo_convert/structure/worst@8/std:0.28748535288029226 - val-aux/grpo_convert/structure/best@16/mean:0.5 - val-aux/grpo_convert/structure/best@16/std:0.0 - val-aux/grpo_convert/structure/worst@16/mean:-0.47750000000000004 - val-aux/grpo_convert/structure/worst@16/std:0.10365206220813938 - val-aux/grpo_convert/structure/best@32/mean:0.5 - val-aux/grpo_convert/structure/best@32/std:0.0 - val-aux/grpo_convert/structure/worst@32/mean:-0.499 - val-aux/grpo_convert/structure/worst@32/std:0.022338307903688678 - val-aux/grpo_convert/structure/best@50/mean:0.5 - val-aux/grpo_convert/structure/best@50/std:0.0 - val-aux/grpo_convert/structure/worst@50/mean:-0.5 - val-aux/grpo_convert/structure/worst@50/std:0.0 - val-aux/grpo_convert/boxed/mean@50:0.195 - val-aux/grpo_convert/boxed/std@50:0.21852135070065165 - val-aux/grpo_convert/boxed/best@2/mean:0.29075 - val-aux/grpo_convert/boxed/best@2/std:0.20855719169108716 - val-aux/grpo_convert/boxed/worst@2/mean:0.10225 - val-aux/grpo_convert/boxed/worst@2/std:0.16856717315141395 - val-aux/grpo_convert/boxed/best@4/mean:0.382 - val-aux/grpo_convert/boxed/best@4/std:0.1625844150827784 - val-aux/grpo_convert/boxed/worst@4/mean:0.03475 - val-aux/grpo_convert/boxed/worst@4/std:0.09412673669040057 - val-aux/grpo_convert/boxed/best@8/mean:0.4525 - val-aux/grpo_convert/boxed/best@8/std:0.09807522622966515 - val-aux/grpo_convert/boxed/worst@8/mean:0.006 - val-aux/grpo_convert/boxed/worst@8/std:0.038262252939417984 - val-aux/grpo_convert/boxed/best@16/mean:0.48975 - val-aux/grpo_convert/boxed/best@16/std:0.04957254784656525 - val-aux/grpo_convert/boxed/worst@16/mean:0.0 - val-aux/grpo_convert/boxed/worst@16/std:0.0 - val-aux/grpo_convert/boxed/best@32/mean:0.49975 - val-aux/grpo_convert/boxed/best@32/std:0.007901740314639555 - val-aux/grpo_convert/boxed/worst@32/mean:0.0 - val-aux/grpo_convert/boxed/worst@32/std:0.0 - val-aux/grpo_convert/boxed/best@50/mean:0.5 - val-aux/grpo_convert/boxed/best@50/std:0.0 - val-aux/grpo_convert/boxed/worst@50/mean:0.0 - val-aux/grpo_convert/boxed/worst@50/std:0.0 - val-aux/grpo_convert/correct/mean@50:0.19 - val-aux/grpo_convert/correct/std@50:0.33483397535786735 - val-aux/grpo_convert/correct/best@2/mean:0.3165 - val-aux/grpo_convert/correct/best@2/std:0.37737648044603567 - val-aux/grpo_convert/correct/worst@2/mean:0.0655 - val-aux/grpo_convert/correct/worst@2/std:0.18993827807075045 - val-aux/grpo_convert/correct/best@4/mean:0.48050000000000004 - val-aux/grpo_convert/correct/best@4/std:0.3751748921316834 - val-aux/grpo_convert/correct/worst@4/mean:0.0115 - val-aux/grpo_convert/correct/worst@4/std:0.07495165108254788 - val-aux/grpo_convert/correct/best@8/mean:0.621 - val-aux/grpo_convert/correct/best@8/std:0.3094092346218084 - val-aux/grpo_convert/correct/worst@8/mean:0.0 - val-aux/grpo_convert/correct/worst@8/std:0.0 - val-aux/grpo_convert/correct/best@16/mean:0.732 - val-aux/grpo_convert/correct/best@16/std:0.2493511580081392 - val-aux/grpo_convert/correct/worst@16/mean:0.0 - val-aux/grpo_convert/correct/worst@16/std:0.0 - val-aux/grpo_convert/correct/best@32/mean:0.8574999999999999 - val-aux/grpo_convert/correct/best@32/std:0.2257072218605333 - val-aux/grpo_convert/correct/worst@32/mean:0.0 - val-aux/grpo_convert/correct/worst@32/std:0.0 - val-aux/grpo_convert/correct/best@50/mean:0.935 - val-aux/grpo_convert/correct/best@50/std:0.16815171720800237 - val-aux/grpo_convert/correct/worst@50/mean:0.0 - val-aux/grpo_convert/correct/worst@50/std:0.0 - val-core/grpo_convert/acc/mean@50:0.19 - val-aux/grpo_convert/acc/std@50:0.33483397535786735 - val-aux/grpo_convert/acc/best@2/mean:0.3165 - val-aux/grpo_convert/acc/best@2/std:0.37737648044603567 - val-aux/grpo_convert/acc/worst@2/mean:0.0655 - val-aux/grpo_convert/acc/worst@2/std:0.18993827807075045 - val-aux/grpo_convert/acc/best@4/mean:0.48050000000000004 - val-aux/grpo_convert/acc/best@4/std:0.3751748921316834 - val-aux/grpo_convert/acc/worst@4/mean:0.0115 - val-aux/grpo_convert/acc/worst@4/std:0.07495165108254788 - val-aux/grpo_convert/acc/best@8/mean:0.621 - val-aux/grpo_convert/acc/best@8/std:0.3094092346218084 - val-aux/grpo_convert/acc/worst@8/mean:0.0 - val-aux/grpo_convert/acc/worst@8/std:0.0 - val-aux/grpo_convert/acc/best@16/mean:0.732 - val-aux/grpo_convert/acc/best@16/std:0.2493511580081392 - val-aux/grpo_convert/acc/worst@16/mean:0.0 - val-aux/grpo_convert/acc/worst@16/std:0.0 - val-aux/grpo_convert/acc/best@32/mean:0.8574999999999999 - val-aux/grpo_convert/acc/best@32/std:0.2257072218605333 - val-aux/grpo_convert/acc/worst@32/mean:0.0 - val-aux/grpo_convert/acc/worst@32/std:0.0 - val-core/grpo_convert/acc/best@50/mean:0.935 - val-core/grpo_convert/acc/best@50/std:0.16815171720800237 - val-aux/grpo_convert/acc/worst@50/mean:0.0 - val-aux/grpo_convert/acc/worst@50/std:0.0 - critic/score/mean:0.29296875 - critic/score/max:2.0 - critic/score/min:-0.5 - critic/rewards/mean:0.29296875 - critic/rewards/max:2.0 - critic/rewards/min:-0.5 - critic/advantages/mean:-0.03813936188817024 - critic/advantages/max:2.4748709201812744 - critic/advantages/min:-1.368935465812683 - critic/returns/mean:-0.03813936188817024 - critic/returns/max:2.4748709201812744 - critic/returns/min:-1.368935465812683 - response_length/mean:330.453125 - response_length/max:1618.0 - response_length/min:14.0 - response_length/clip_ratio:0.0 - prompt_length/mean:407.875 - prompt_length/max:414.0 - prompt_length/min:407.0 - prompt_length/clip_ratio:0.0 - train-reward/score/mean:0.29296875 - train-acc/score/ratio:0.0 - train-acc/group_all_correct/ratio:0.0 - train-acc/group_any_correct/ratio:0.0 - train-acc/group_all_wrong/ratio:1.0 - timing_s/start_profile:0.00011495687067508698 - timing_s/generate_sequences:58.38601303100586 - timing_s/reshard:0.8152897953987122 - timing_s/gen:61.902974247932434 - timing_s/reward:0.23492959700524807 - timing_s/old_log_prob:9.670288478955626 - timing_s/adv:0.006351521238684654 - timing_s/update_actor:19.267640130594373 - timing_s/testing:125.73875764198601 - timing_s/save_checkpoint:8.903052665293217 - timing_s/step:225.77959932759404 - timing_s/stop_profile:5.144625902175903e-05 - timing_per_token_ms/adv:3.3603798905279317e-05 - timing_per_token_ms/gen:0.7317482416181904 - timing_per_token_ms/update_actor:0.10193871357688598 - perf/total_num_tokens:189012 - perf/time_per_step:225.77959932759404 - perf/throughput:104.64408684559326 - train/num_gen_batches:1[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   9%|▊         | 20/230 [33:42<8:07:58, 139.42s/it]
+[36m(WorkerDict pid=2987387)[0m INFO:2025-08-08 00:25:06,813:[Rank 4] Saved model to /gemini/platform/public/NLP/private/project_model/math/ckpts/DAPO-Qwen2.5-VL-Math/global_step_10/actor/model_world_size_8_rank_4.pt[32m [repeated 7x across cluster][0m
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:   9%|▉         | 21/230 [35:41<7:44:18, 133.29s/it]
+[36m(WorkerDict pid=2987384)[0m INFO:2025-08-08 00:25:11,195:[Rank 1] Saved optim to /gemini/platform/public/NLP/private/project_model/math/ckpts/DAPO-Qwen2.5-VL-Math/global_step_10/actor/optim_world_size_8_rank_1.pt[32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=2987384)[0m INFO:2025-08-08 00:25:11,196:[Rank 1] Saved extra_state to /gemini/platform/public/NLP/private/project_model/math/ckpts/DAPO-Qwen2.5-VL-Math/global_step_10/actor/extra_state_world_size_8_rank_1.pt[32m [repeated 7x across cluster][0m
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:  10%|▉         | 22/230 [37:24<7:10:03, 124.05s/it]
+
+[36m(TaskRunner pid=2985779)[0m batch.non_tensor_batch 15 dict_keys(['type', 'data_source', 'ability', 'reward_model', 'extra_info', 'multi_modal_inputs', 'index', 'tools_kwargs', 'interaction_kwargs', 'uid', 'score', 'structure', 'boxed', 'correct', 'acc'])
+[36m(TaskRunner pid=2985779)[0m metrics {'critic/score/mean': 0.58203125, 'critic/score/max': 2.0, 'critic/score/min': -0.5, 'critic/rewards/mean': 0.58203125, 'critic/rewards/max': 2.0, 'critic/rewards/min': -0.5, 'critic/advantages/mean': -0.06986399739980698, 'critic/advantages/max': 2.1435799598693848, 'critic/advantages/min': -2.050607204437256, 'critic/returns/mean': -0.06986399739980698, 'critic/returns/max': 2.1435799598693848, 'critic/returns/min': -2.050607204437256, 'response_length/mean': 338.39453125, 'response_length/max': 1265.0, 'response_length/min': 14.0, 'response_length/clip_ratio': 0.0, 'prompt_length/mean': 408.75, 'prompt_length/max': 414.0, 'prompt_length/min': 407.0, 'prompt_length/clip_ratio': 0.0, 'train-reward/score/mean': 0.58203125, 'train-acc/score/ratio': 0.0}
+[36m(TaskRunner pid=2985779)[0m group_metrics {'train-acc/group_all_correct/ratio': 0.0, 'train-acc/group_any_correct/ratio': 0.0, 'train-acc/group_all_wrong/ratio': 1.0}
+[36m(TaskRunner pid=2985779)[0m step:11 - global_seqlen/min:20462 - global_seqlen/max:26962 - global_seqlen/minmax_diff:6500 - global_seqlen/balanced_min:23908 - global_seqlen/balanced_max:23909 - global_seqlen/mean:23908.625 - actor/entropy:0.7707845568656921 - actor/pg_loss:0.07107534709696968 - actor/pg_clipfrac:0.0009614720668954154 - actor/ppo_kl:6.648883330247675e-05 - actor/pg_clipfrac_lower:0.0 - actor/grad_norm:1.5745794177055359 - perf/mfu/actor:0.03356263051343542 - perf/max_memory_allocated_gb:67.84729433059692 - perf/max_memory_reserved_gb:78.94140625 - perf/cpu_memory_used_gb:126.83736038208008 - actor/lr:1e-06 - critic/score/mean:0.58203125 - critic/score/max:2.0 - critic/score/min:-0.5 - critic/rewards/mean:0.58203125 - critic/rewards/max:2.0 - critic/rewards/min:-0.5 - critic/advantages/mean:-0.06986399739980698 - critic/advantages/max:2.1435799598693848 - critic/advantages/min:-2.050607204437256 - critic/returns/mean:-0.06986399739980698 - critic/returns/max:2.1435799598693848 - critic/returns/min:-2.050607204437256 - response_length/mean:338.39453125 - response_length/max:1265.0 - response_length/min:14.0 - response_length/clip_ratio:0.0 - prompt_length/mean:408.75 - prompt_length/max:414.0 - prompt_length/min:407.0 - prompt_length/clip_ratio:0.0 - train-reward/score/mean:0.58203125 - train-acc/score/ratio:0.0 - train-acc/group_all_correct/ratio:0.0 - train-acc/group_any_correct/ratio:0.0 - train-acc/group_all_wrong/ratio:1.0 - timing_s/start_profile:9.077973663806915e-05 - timing_s/generate_sequences:74.205078125 - timing_s/reshard:0.803547739982605 - timing_s/gen:88.78916935995221 - timing_s/reward:0.24127755872905254 - timing_s/old_log_prob:9.90769037604332 - timing_s/adv:0.006293533369898796 - timing_s/update_actor:19.90355560556054 - timing_s/step:118.89922782592475 - timing_s/stop_profile:4.5610591769218445e-05 - timing_per_token_ms/adv:3.290409512204694e-05 - timing_per_token_ms/gen:1.024935868588489 - timing_per_token_ms/update_actor:0.10406054094265428 - perf/total_num_tokens:191269 - perf/time_per_step:118.89922782592475 - perf/throughput:201.08309731837443 - train/num_gen_batches:1
+[36m(TaskRunner pid=2985779)[0m batch.non_tensor_batch 15 dict_keys(['type', 'data_source', 'ability', 'reward_model', 'extra_info', 'multi_modal_inputs', 'index', 'tools_kwargs', 'interaction_kwargs', 'uid', 'score', 'structure', 'boxed', 'correct', 'acc'])
+[36m(TaskRunner pid=2985779)[0m metrics {'critic/score/mean': 0.740234375, 'critic/score/max': 2.0, 'critic/score/min': -0.5, 'critic/rewards/mean': 0.740234375, 'critic/rewards/max': 2.0, 'critic/rewards/min': -0.5, 'critic/advantages/mean': -0.007383144460618496, 'critic/advantages/max': 1.81655752658844, 'critic/advantages/min': -2.1198863983154297, 'critic/returns/mean': -0.007383144460618496, 'critic/returns/max': 1.81655752658844, 'critic/returns/min': -2.1198863983154297, 'response_length/mean': 263.8828125, 'response_length/max': 1815.0, 'response_length/min': 40.0, 'response_length/clip_ratio': 0.0, 'prompt_length/mean': 407.4375, 'prompt_length/max': 414.0, 'prompt_length/min': 407.0, 'prompt_length/clip_ratio': 0.0, 'train-reward/score/mean': 0.740234375, 'train-acc/score/ratio': 0.0}
+[36m(TaskRunner pid=2985779)[0m group_metrics {'train-acc/group_all_correct/ratio': 0.0, 'train-acc/group_any_correct/ratio': 0.0, 'train-acc/group_all_wrong/ratio': 1.0}
+[36m(TaskRunner pid=2985779)[0m step:12 - global_seqlen/min:19186 - global_seqlen/max:23063 - global_seqlen/minmax_diff:3877 - global_seqlen/balanced_min:21394 - global_seqlen/balanced_max:22097 - global_seqlen/mean:21482.25 - actor/entropy:0.8479440808296204 - actor/pg_loss:0.008510199065009752 - actor/pg_clipfrac:0.0007300043944269419 - actor/ppo_kl:0.00013350215158425272 - actor/pg_clipfrac_lower:0.0 - actor/grad_norm:2.3351348638534546 - perf/mfu/actor:0.03042621481911333 - perf/max_memory_allocated_gb:67.84729433059692 - perf/max_memory_reserved_gb:78.94140625 - perf/cpu_memory_used_gb:126.63465118408203 - actor/lr:1e-06 - critic/score/mean:0.740234375 - critic/score/max:2.0 - critic/score/min:-0.5 - critic/rewards/mean:0.740234375 - critic/rewards/max:2.0 - critic/rewards/min:-0.5 - critic/advantages/mean:-0.007383144460618496 - critic/advantages/max:1.81655752658844 - critic/advantages/min:-2.1198863983154297 - critic/returns/mean:-0.007383144460618496 - critic/returns/max:1.81655752658844 - critic/returns/min:-2.1198863983154297 - response_length/mean:263.8828125 - response_length/max:1815.0 - response_length/min:40.0 - response_length/clip_ratio:0.0 - prompt_length/mean:407.4375 - prompt_length/max:414.0 - prompt_length/min:407.0 - prompt_length/clip_ratio:0.0 - train-reward/score/mean:0.740234375 - train-acc/score/ratio:0.0 - train-acc/group_all_correct/ratio:0.0 - train-acc/group_any_correct/ratio:0.0 - train-acc/group_all_wrong/ratio:1.0 - timing_s/start_profile:0.00014171749353408813 - timing_s/generate_sequences:65.5567855834961 - timing_s/reshard:0.6937196254730225 - timing_s/gen:74.68825874105096 - timing_s/reward:0.24873963929712772 - timing_s/old_log_prob:8.555765053257346 - timing_s/adv:0.0064423419535160065 - timing_s/update_actor:18.855111287906766 - timing_s/step:102.40810445696115 - timing_s/stop_profile:5.161017179489136e-05 - timing_per_token_ms/adv:3.748642456863228e-05 - timing_per_token_ms/gen:1.1056082355012429 - timing_per_token_ms/update_actor:0.10971331731957061 - perf/total_num_tokens:171858 - perf/time_per_step:102.40810445696115 - perf/throughput:209.77099531246867 - train/num_gen_batches:1
+[36m(TaskRunner pid=2985779)[0m batch.non_tensor_batch 15 dict_keys(['type', 'data_source', 'ability', 'reward_model', 'extra_info', 'multi_modal_inputs', 'index', 'tools_kwargs', 'interaction_kwargs', 'uid', 'score', 'structure', 'boxed', 'correct', 'acc'])
+[36m(TaskRunner pid=2985779)[0m metrics {'critic/score/mean': 0.908203125, 'critic/score/max': 2.0, 'critic/score/min': -0.5, 'critic/rewards/mean': 0.908203125, 'critic/rewards/max': 2.0, 'critic/rewards/min': -0.5, 'critic/advantages/mean': -0.0591425746679306, 'critic/advantages/max': 2.1602420806884766, 'critic/advantages/min': -2.050607204437256, 'critic/returns/mean': -0.0591425746679306, 'critic/returns/max': 2.1602420806884766, 'critic/returns/min': -2.050607204437256, 'response_length/mean': 279.4140625, 'response_length/max': 1380.0, 'response_length/min': 47.0, 'response_length/clip_ratio': 0.0, 'prompt_length/mean': 407.21875, 'prompt_length/max': 414.0, 'prompt_length/min': 407.0, 'prompt_length/clip_ratio': 0.0, 'train-reward/score/mean': 0.908203125, 'train-acc/score/ratio': 0.0}
+[36m(TaskRunner pid=2985779)[0m group_metrics {'train-acc/group_all_correct/ratio': 0.0, 'train-acc/group_any_correct/ratio': 0.0, 'train-acc/group_all_wrong/ratio': 1.0}
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:  10%|█         | 23/230 [38:42<6:20:51, 110.39s/it]
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:  10%|█         | 24/230 [40:14<6:00:28, 104.99s/it]
+[36m(TaskRunner pid=2985779)[0m step:13 - global_seqlen/min:18741 - global_seqlen/max:25662 - global_seqlen/minmax_diff:6921 - global_seqlen/balanced_min:21959 - global_seqlen/balanced_max:22059 - global_seqlen/mean:21972.25 - actor/entropy:0.813646674156189 - actor/pg_loss:0.05739199106271068 - actor/pg_clipfrac:0.0007284979413573941 - actor/ppo_kl:0.0002319143865558241 - actor/pg_clipfrac_lower:0.0 - actor/grad_norm:1.3137973546981812 - perf/mfu/actor:0.03145401078146585 - perf/max_memory_allocated_gb:67.84729433059692 - perf/max_memory_reserved_gb:78.94140625 - perf/cpu_memory_used_gb:127.01717376708984 - actor/lr:1e-06 - critic/score/mean:0.908203125 - critic/score/max:2.0 - critic/score/min:-0.5 - critic/rewards/mean:0.908203125 - critic/rewards/max:2.0 - critic/rewards/min:-0.5 - critic/advantages/mean:-0.0591425746679306 - critic/advantages/max:2.1602420806884766 - critic/advantages/min:-2.050607204437256 - critic/returns/mean:-0.0591425746679306 - critic/returns/max:2.1602420806884766 - critic/returns/min:-2.050607204437256 - response_length/mean:279.4140625 - response_length/max:1380.0 - response_length/min:47.0 - response_length/clip_ratio:0.0 - prompt_length/mean:407.21875 - prompt_length/max:414.0 - prompt_length/min:407.0 - prompt_length/clip_ratio:0.0 - train-reward/score/mean:0.908203125 - train-acc/score/ratio:0.0 - train-acc/group_all_correct/ratio:0.0 - train-acc/group_any_correct/ratio:0.0 - train-acc/group_all_wrong/ratio:1.0 - timing_s/start_profile:0.00010089576244354248 - timing_s/generate_sequences:42.303531646728516 - timing_s/reshard:0.826573371887207 - timing_s/gen:49.251762609928846 - timing_s/reward:0.22873234376311302 - timing_s/old_log_prob:9.482662132009864 - timing_s/adv:0.006508523598313332 - timing_s/update_actor:19.256752084940672 - timing_s/step:78.27432845905423 - timing_s/stop_profile:4.661455750465393e-05 - timing_per_token_ms/adv:3.702695216872038e-05 - timing_per_token_ms/gen:0.688546939884368 - timing_per_token_ms/update_actor:0.10955154845851399 - perf/total_num_tokens:175778 - perf/time_per_step:78.27432845905423 - perf/throughput:280.7082530448513 - train/num_gen_batches:1
+[36m(TaskRunner pid=2985779)[0m batch.non_tensor_batch 15 dict_keys(['type', 'data_source', 'ability', 'reward_model', 'extra_info', 'multi_modal_inputs', 'index', 'tools_kwargs', 'interaction_kwargs', 'uid', 'score', 'structure', 'boxed', 'correct', 'acc'])
+[36m(TaskRunner pid=2985779)[0m metrics {'critic/score/mean': 1.1640625, 'critic/score/max': 2.0, 'critic/score/min': -0.5, 'critic/rewards/mean': 1.1640625, 'critic/rewards/max': 2.0, 'critic/rewards/min': -0.5, 'critic/advantages/mean': -0.013246838934719563, 'critic/advantages/max': 2.4748666286468506, 'critic/advantages/min': -2.4748709201812744, 'critic/returns/mean': -0.013246838934719563, 'critic/returns/max': 2.4748666286468506, 'critic/returns/min': -2.4748709201812744, 'response_length/mean': 248.6484375, 'response_length/max': 1245.0, 'response_length/min': 16.0, 'response_length/clip_ratio': 0.0, 'prompt_length/mean': 408.53125, 'prompt_length/max': 414.0, 'prompt_length/min': 407.0, 'prompt_length/clip_ratio': 0.0, 'train-reward/score/mean': 1.1640625, 'train-acc/score/ratio': 0.0}
+[36m(TaskRunner pid=2985779)[0m group_metrics {'train-acc/group_all_correct/ratio': 0.0, 'train-acc/group_any_correct/ratio': 0.0, 'train-acc/group_all_wrong/ratio': 1.0}
+[36m(TaskRunner pid=2985779)[0m step:14 - global_seqlen/min:18372 - global_seqlen/max:24812 - global_seqlen/minmax_diff:6440 - global_seqlen/balanced_min:20997 - global_seqlen/balanced_max:21255 - global_seqlen/mean:21029.75 - actor/entropy:0.6816747784614563 - actor/pg_loss:0.011915136128664017 - actor/pg_clipfrac:0.000537127877275149 - actor/ppo_kl:-0.00013576942728832364 - actor/pg_clipfrac_lower:0.0 - actor/grad_norm:1.1651164889335632 - perf/mfu/actor:0.0297122916462125 - perf/max_memory_allocated_gb:67.84729433059692 - perf/max_memory_reserved_gb:78.94140625 - perf/cpu_memory_used_gb:126.8570556640625 - actor/lr:1e-06 - critic/score/mean:1.1640625 - critic/score/max:2.0 - critic/score/min:-0.5 - critic/rewards/mean:1.1640625 - critic/rewards/max:2.0 - critic/rewards/min:-0.5 - critic/advantages/mean:-0.013246838934719563 - critic/advantages/max:2.4748666286468506 - critic/advantages/min:-2.4748709201812744 - critic/returns/mean:-0.013246838934719563 - critic/returns/max:2.4748666286468506 - critic/returns/min:-2.4748709201812744 - response_length/mean:248.6484375 - response_length/max:1245.0 - response_length/min:16.0 - response_length/clip_ratio:0.0 - prompt_length/mean:408.53125 - prompt_length/max:414.0 - prompt_length/min:407.0 - prompt_length/clip_ratio:0.0 - train-reward/score/mean:1.1640625 - train-acc/score/ratio:0.0 - train-acc/group_all_correct/ratio:0.0 - train-acc/group_any_correct/ratio:0.0 - train-acc/group_all_wrong/ratio:1.0 - timing_s/start_profile:0.0003977622836828232 - timing_s/generate_sequences:49.93766403198242 - timing_s/reshard:0.7413849234580994 - timing_s/gen:59.47497723251581 - timing_s/reward:0.2918042577803135 - timing_s/old_log_prob:9.348264776170254 - timing_s/adv:0.005739567801356316 - timing_s/update_actor:19.202184714376926 - timing_s/step:88.39735555462539 - timing_s/stop_profile:5.002133548259735e-05 - timing_per_token_ms/adv:3.41157633908886e-05 - timing_per_token_ms/gen:0.9343478372532097 - timing_per_token_ms/update_actor:0.11413702442002951 - perf/total_num_tokens:168238 - perf/time_per_step:88.39735555462539 - perf/throughput:237.90021622314944 - train/num_gen_batches:1
+[36m(TaskRunner pid=2985779)[0m batch.non_tensor_batch 15 dict_keys(['type', 'data_source', 'ability', 'reward_model', 'extra_info', 'multi_modal_inputs', 'index', 'tools_kwargs', 'interaction_kwargs', 'uid', 'score', 'structure', 'boxed', 'correct', 'acc'])
+[36m(TaskRunner pid=2985779)[0m metrics {'critic/score/mean': 1.212890625, 'critic/score/max': 2.0, 'critic/score/min': -0.5, 'critic/rewards/mean': 1.212890625, 'critic/rewards/max': 2.0, 'critic/rewards/min': -0.5, 'critic/advantages/mean': 0.01823093369603157, 'critic/advantages/max': 2.4748666286468506, 'critic/advantages/min': -2.4748666286468506, 'critic/returns/mean': 0.01823093369603157, 'critic/returns/max': 2.4748666286468506, 'critic/returns/min': -2.4748666286468506, 'response_length/mean': 249.8828125, 'response_length/max': 870.0, 'response_length/min': 32.0, 'response_length/clip_ratio': 0.0, 'prompt_length/mean': 407.4375, 'prompt_length/max': 414.0, 'prompt_length/min': 407.0, 'prompt_length/clip_ratio': 0.0, 'train-reward/score/mean': 1.212890625, 'train-acc/score/ratio': 0.0}
+[36m(TaskRunner pid=2985779)[0m group_metrics {'train-acc/group_all_correct/ratio': 0.0, 'train-acc/group_any_correct/ratio': 0.0, 'train-acc/group_all_wrong/ratio': 1.0}
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:  11%|█         | 25/230 [42:01<5:59:50, 105.32s/it]
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:  11%|█▏        | 26/230 [43:41<5:53:22, 103.93s/it]
+[36m(TaskRunner pid=2985779)[0m step:15 - global_seqlen/min:18275 - global_seqlen/max:23818 - global_seqlen/minmax_diff:5543 - global_seqlen/balanced_min:21034 - global_seqlen/balanced_max:21035 - global_seqlen/mean:21034.25 - actor/entropy:0.8863415718078613 - actor/pg_loss:-0.01936892606317997 - actor/pg_clipfrac:0.0007337255907865862 - actor/ppo_kl:0.00011765605207377423 - actor/pg_clipfrac_lower:0.0 - actor/grad_norm:1.9755725264549255 - perf/mfu/actor:0.0302278746918544 - perf/max_memory_allocated_gb:67.84729433059692 - perf/max_memory_reserved_gb:78.94140625 - perf/cpu_memory_used_gb:127.45975112915039 - actor/lr:1e-06 - critic/score/mean:1.212890625 - critic/score/max:2.0 - critic/score/min:-0.5 - critic/rewards/mean:1.212890625 - critic/rewards/max:2.0 - critic/rewards/min:-0.5 - critic/advantages/mean:0.01823093369603157 - critic/advantages/max:2.4748666286468506 - critic/advantages/min:-2.4748666286468506 - critic/returns/mean:0.01823093369603157 - critic/returns/max:2.4748666286468506 - critic/returns/min:-2.4748666286468506 - response_length/mean:249.8828125 - response_length/max:870.0 - response_length/min:32.0 - response_length/clip_ratio:0.0 - prompt_length/mean:407.4375 - prompt_length/max:414.0 - prompt_length/min:407.0 - prompt_length/clip_ratio:0.0 - train-reward/score/mean:1.212890625 - train-acc/score/ratio:0.0 - train-acc/group_all_correct/ratio:0.0 - train-acc/group_any_correct/ratio:0.0 - train-acc/group_all_wrong/ratio:1.0 - timing_s/start_profile:8.911453187465668e-05 - timing_s/generate_sequences:64.74601745605469 - timing_s/reshard:0.8157988786697388 - timing_s/gen:76.37554151192307 - timing_s/reward:0.2293393388390541 - timing_s/old_log_prob:9.497153151780367 - timing_s/adv:0.0057502128183841705 - timing_s/update_actor:19.53028086014092 - timing_s/step:105.68623655848205 - timing_s/stop_profile:4.4811517000198364e-05 - timing_per_token_ms/adv:3.417172479636884e-05 - timing_per_token_ms/gen:1.1939274896345642 - timing_per_token_ms/update_actor:0.11606237957225073 - perf/total_num_tokens:168274 - perf/time_per_step:105.68623655848205 - perf/throughput:199.02544252638407 - train/num_gen_batches:1
+[36m(TaskRunner pid=2985779)[0m batch.non_tensor_batch 15 dict_keys(['type', 'data_source', 'ability', 'reward_model', 'extra_info', 'multi_modal_inputs', 'index', 'tools_kwargs', 'interaction_kwargs', 'uid', 'score', 'structure', 'boxed', 'correct', 'acc'])
+[36m(TaskRunner pid=2985779)[0m metrics {'critic/score/mean': 1.205078125, 'critic/score/max': 2.0, 'critic/score/min': -0.5, 'critic/rewards/mean': 1.205078125, 'critic/rewards/max': 2.0, 'critic/rewards/min': -0.5, 'critic/advantages/mean': -0.07151228189468384, 'critic/advantages/max': 2.4748666286468506, 'critic/advantages/min': -2.4748709201812744, 'critic/returns/mean': -0.07151228189468384, 'critic/returns/max': 2.4748666286468506, 'critic/returns/min': -2.4748709201812744, 'response_length/mean': 268.32421875, 'response_length/max': 1751.0, 'response_length/min': 41.0, 'response_length/clip_ratio': 0.0, 'prompt_length/mean': 407.875, 'prompt_length/max': 414.0, 'prompt_length/min': 407.0, 'prompt_length/clip_ratio': 0.0, 'train-reward/score/mean': 1.205078125, 'train-acc/score/ratio': 0.0}
+[36m(TaskRunner pid=2985779)[0m group_metrics {'train-acc/group_all_correct/ratio': 0.0, 'train-acc/group_any_correct/ratio': 0.0, 'train-acc/group_all_wrong/ratio': 1.0}
+[36m(TaskRunner pid=2985779)[0m step:16 - global_seqlen/min:19358 - global_seqlen/max:24441 - global_seqlen/minmax_diff:5083 - global_seqlen/balanced_min:21579 - global_seqlen/balanced_max:22045 - global_seqlen/mean:21638.375 - actor/entropy:0.6507808566093445 - actor/pg_loss:0.07095806362728278 - actor/pg_clipfrac:0.0006166745636922618 - actor/ppo_kl:4.766054674594974e-05 - actor/pg_clipfrac_lower:0.0 - actor/grad_norm:1.2498606443405151 - perf/mfu/actor:0.029994658283494645 - perf/max_memory_allocated_gb:67.84729433059692 - perf/max_memory_reserved_gb:78.94140625 - perf/cpu_memory_used_gb:127.83968734741211 - actor/lr:1e-06 - critic/score/mean:1.205078125 - critic/score/max:2.0 - critic/score/min:-0.5 - critic/rewards/mean:1.205078125 - critic/rewards/max:2.0 - critic/rewards/min:-0.5 - critic/advantages/mean:-0.07151228189468384 - critic/advantages/max:2.4748666286468506 - critic/advantages/min:-2.4748709201812744 - critic/returns/mean:-0.07151228189468384 - critic/returns/max:2.4748666286468506 - critic/returns/min:-2.4748709201812744 - response_length/mean:268.32421875 - response_length/max:1751.0 - response_length/min:41.0 - response_length/clip_ratio:0.0 - prompt_length/mean:407.875 - prompt_length/max:414.0 - prompt_length/min:407.0 - prompt_length/clip_ratio:0.0 - train-reward/score/mean:1.205078125 - train-acc/score/ratio:0.0 - train-acc/group_all_correct/ratio:0.0 - train-acc/group_any_correct/ratio:0.0 - train-acc/group_all_wrong/ratio:1.0 - timing_s/start_profile:8.721649646759033e-05 - timing_s/generate_sequences:62.42899703979492 - timing_s/reshard:0.7667056322097778 - timing_s/gen:70.90382415615022 - timing_s/reward:0.22844689153134823 - timing_s/old_log_prob:9.308436058461666 - timing_s/adv:0.006079597398638725 - timing_s/update_actor:19.36261118389666 - timing_s/step:99.85921537317336 - timing_s/stop_profile:9.044632315635681e-05 - timing_per_token_ms/adv:3.512045959226793e-05 - timing_per_token_ms/gen:1.0322141788029031 - timing_per_token_ms/update_actor:0.11185342697809252 - perf/total_num_tokens:173107 - perf/time_per_step:99.85921537317336 - perf/throughput:216.6888145389237 - train/num_gen_batches:1
+[36m(TaskRunner pid=2985779)[0m batch.non_tensor_batch 15 dict_keys(['type', 'data_source', 'ability', 'reward_model', 'extra_info', 'multi_modal_inputs', 'index', 'tools_kwargs', 'interaction_kwargs', 'uid', 'score', 'structure', 'boxed', 'correct', 'acc'])
+[36m(TaskRunner pid=2985779)[0m metrics {'critic/score/mean': 1.361328125, 'critic/score/max': 2.0, 'critic/score/min': -0.5, 'critic/rewards/mean': 1.361328125, 'critic/rewards/max': 2.0, 'critic/rewards/min': -0.5, 'critic/advantages/mean': 0.028072915971279144, 'critic/advantages/max': 2.4748666286468506, 'critic/advantages/min': -2.4748666286468506, 'critic/returns/mean': 0.028072915971279144, 'critic/returns/max': 2.4748666286468506, 'critic/returns/min': -2.4748666286468506, 'response_length/mean': 202.71875, 'response_length/max': 753.0, 'response_length/min': 50.0, 'response_length/clip_ratio': 0.0, 'prompt_length/mean': 407.65625, 'prompt_length/max': 414.0, 'prompt_length/min': 407.0, 'prompt_length/clip_ratio': 0.0, 'train-reward/score/mean': 1.361328125, 'train-acc/score/ratio': 0.0}
+[36m(TaskRunner pid=2985779)[0m group_metrics {'train-acc/group_all_correct/ratio': 0.0, 'train-acc/group_any_correct/ratio': 0.0, 'train-acc/group_all_wrong/ratio': 1.0}
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:  12%|█▏        | 27/230 [45:37<6:03:40, 107.49s/it]
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:  12%|█▏        | 28/230 [46:54<5:30:48, 98.26s/it] 
+[36m(TaskRunner pid=2985779)[0m step:17 - global_seqlen/min:17993 - global_seqlen/max:22393 - global_seqlen/minmax_diff:4400 - global_seqlen/balanced_min:19532 - global_seqlen/balanced_max:19532 - global_seqlen/mean:19532.0 - actor/entropy:0.791383683681488 - actor/pg_loss:-0.028348248917609453 - actor/pg_clipfrac:0.0005784543172921985 - actor/ppo_kl:7.615030779106746e-05 - actor/pg_clipfrac_lower:0.0 - actor/grad_norm:1.44519704580307 - perf/mfu/actor:0.029689381441672612 - perf/max_memory_allocated_gb:71.58446788787842 - perf/max_memory_reserved_gb:80.951171875 - perf/cpu_memory_used_gb:128.11236572265625 - actor/lr:1e-06 - critic/score/mean:1.361328125 - critic/score/max:2.0 - critic/score/min:-0.5 - critic/rewards/mean:1.361328125 - critic/rewards/max:2.0 - critic/rewards/min:-0.5 - critic/advantages/mean:0.028072915971279144 - critic/advantages/max:2.4748666286468506 - critic/advantages/min:-2.4748666286468506 - critic/returns/mean:0.028072915971279144 - critic/returns/max:2.4748666286468506 - critic/returns/min:-2.4748666286468506 - response_length/mean:202.71875 - response_length/max:753.0 - response_length/min:50.0 - response_length/clip_ratio:0.0 - prompt_length/mean:407.65625 - prompt_length/max:414.0 - prompt_length/min:407.0 - prompt_length/clip_ratio:0.0 - train-reward/score/mean:1.361328125 - train-acc/score/ratio:0.0 - train-acc/group_all_correct/ratio:0.0 - train-acc/group_any_correct/ratio:0.0 - train-acc/group_all_wrong/ratio:1.0 - timing_s/start_profile:0.000187799334526062 - timing_s/generate_sequences:71.11930084228516 - timing_s/reshard:0.7443215250968933 - timing_s/gen:88.1937947217375 - timing_s/reward:0.21501636877655983 - timing_s/old_log_prob:8.968671899288893 - timing_s/adv:0.0061493124812841415 - timing_s/update_actor:18.233002638444304 - timing_s/step:115.66241522319615 - timing_s/stop_profile:4.875101149082184e-05 - timing_per_token_ms/adv:3.935408868321307e-05 - timing_per_token_ms/gen:1.699433380640849 - timing_per_token_ms/update_actor:0.11668673611537672 - perf/total_num_tokens:156256 - perf/time_per_step:115.66241522319615 - perf/throughput:168.87076032701458 - train/num_gen_batches:1
+[36m(TaskRunner pid=2985779)[0m batch.non_tensor_batch 15 dict_keys(['type', 'data_source', 'ability', 'reward_model', 'extra_info', 'multi_modal_inputs', 'index', 'tools_kwargs', 'interaction_kwargs', 'uid', 'score', 'structure', 'boxed', 'correct', 'acc'])
+[36m(TaskRunner pid=2985779)[0m metrics {'critic/score/mean': 1.375, 'critic/score/max': 2.0, 'critic/score/min': -0.5, 'critic/rewards/mean': 1.375, 'critic/rewards/max': 2.0, 'critic/rewards/min': -0.5, 'critic/advantages/mean': 0.051587920635938644, 'critic/advantages/max': 2.4748666286468506, 'critic/advantages/min': -2.4748666286468506, 'critic/returns/mean': 0.051587920635938644, 'critic/returns/max': 2.4748666286468506, 'critic/returns/min': -2.4748666286468506, 'response_length/mean': 229.08203125, 'response_length/max': 900.0, 'response_length/min': 7.0, 'response_length/clip_ratio': 0.0, 'prompt_length/mean': 407.875, 'prompt_length/max': 414.0, 'prompt_length/min': 407.0, 'prompt_length/clip_ratio': 0.0, 'train-reward/score/mean': 1.375, 'train-acc/score/ratio': 0.0}
+[36m(TaskRunner pid=2985779)[0m group_metrics {'train-acc/group_all_correct/ratio': 0.0, 'train-acc/group_any_correct/ratio': 0.0, 'train-acc/group_all_wrong/ratio': 1.0}
+[36m(TaskRunner pid=2985779)[0m step:18 - global_seqlen/min:18335 - global_seqlen/max:23082 - global_seqlen/minmax_diff:4747 - global_seqlen/balanced_min:20382 - global_seqlen/balanced_max:20383 - global_seqlen/mean:20382.625 - actor/entropy:0.6406322121620178 - actor/pg_loss:-0.05163868609815836 - actor/pg_clipfrac:0.0005278734752209857 - actor/ppo_kl:0.00018932529201265424 - actor/pg_clipfrac_lower:0.0 - actor/grad_norm:1.4158618450164795 - perf/mfu/actor:0.029719736036326792 - perf/max_memory_allocated_gb:71.86105251312256 - perf/max_memory_reserved_gb:81.21875 - perf/cpu_memory_used_gb:128.93556594848633 - actor/lr:1e-06 - critic/score/mean:1.375 - critic/score/max:2.0 - critic/score/min:-0.5 - critic/rewards/mean:1.375 - critic/rewards/max:2.0 - critic/rewards/min:-0.5 - critic/advantages/mean:0.051587920635938644 - critic/advantages/max:2.4748666286468506 - critic/advantages/min:-2.4748666286468506 - critic/returns/mean:0.051587920635938644 - critic/returns/max:2.4748666286468506 - critic/returns/min:-2.4748666286468506 - response_length/mean:229.08203125 - response_length/max:900.0 - response_length/min:7.0 - response_length/clip_ratio:0.0 - prompt_length/mean:407.875 - prompt_length/max:414.0 - prompt_length/min:407.0 - prompt_length/clip_ratio:0.0 - train-reward/score/mean:1.375 - train-acc/score/ratio:0.0 - train-acc/group_all_correct/ratio:0.0 - train-acc/group_any_correct/ratio:0.0 - train-acc/group_all_wrong/ratio:1.0 - timing_s/start_profile:0.00016114860773086548 - timing_s/generate_sequences:46.13443374633789 - timing_s/reshard:0.9628002643585205 - timing_s/gen:49.31957756355405 - timing_s/reward:0.21693526953458786 - timing_s/old_log_prob:8.67204887419939 - timing_s/adv:0.006577884778380394 - timing_s/update_actor:18.32245404459536 - timing_s/step:76.59348213672638 - timing_s/stop_profile:5.0496309995651245e-05 - timing_per_token_ms/adv:4.0340024766071555e-05 - timing_per_token_ms/gen:0.8409852086887893 - timing_per_token_ms/update_actor:0.11236564257912904 - perf/total_num_tokens:163061 - perf/time_per_step:76.59348213672638 - perf/throughput:266.11435374638205 - train/num_gen_batches:1
+[36m(TaskRunner pid=2985779)[0m batch.non_tensor_batch 15 dict_keys(['type', 'data_source', 'ability', 'reward_model', 'extra_info', 'multi_modal_inputs', 'index', 'tools_kwargs', 'interaction_kwargs', 'uid', 'score', 'structure', 'boxed', 'correct', 'acc'])
+[36m(TaskRunner pid=2985779)[0m metrics {'critic/score/mean': 1.42578125, 'critic/score/max': 2.0, 'critic/score/min': -0.5, 'critic/rewards/mean': 1.42578125, 'critic/rewards/max': 2.0, 'critic/rewards/min': -0.5, 'critic/advantages/mean': 0.060652196407318115, 'critic/advantages/max': 2.4748666286468506, 'critic/advantages/min': -2.1435799598693848, 'critic/returns/mean': 0.060652196407318115, 'critic/returns/max': 2.4748666286468506, 'critic/returns/min': -2.1435799598693848, 'response_length/mean': 219.76171875, 'response_length/max': 1346.0, 'response_length/min': 48.0, 'response_length/clip_ratio': 0.0, 'prompt_length/mean': 407.875, 'prompt_length/max': 414.0, 'prompt_length/min': 407.0, 'prompt_length/clip_ratio': 0.0, 'train-reward/score/mean': 1.42578125, 'train-acc/score/ratio': 0.0}
+[36m(TaskRunner pid=2985779)[0m group_metrics {'train-acc/group_all_correct/ratio': 0.0, 'train-acc/group_any_correct/ratio': 0.0, 'train-acc/group_all_wrong/ratio': 1.0}
+[36m(TaskRunner pid=2985779)[0m 
+Training Progress:  13%|█▎        | 29/230 [48:21<5:18:17, 95.01s/it]
+./recipe/dapo/run_dapo_qwen2.5_vl.sh: line 141: 2983577 Killed                  python3 -m recipe.dapo.main_dapo data.train_files="${TRAIN_FILE}" data.val_files="${TEST_FILE}" data.prompt_key=prompt data.filter_overlong_prompts=True data.truncation='error' data.image_key=images data.return_multi_modal_inputs=True data.max_prompt_length=${max_prompt_length} data.max_response_length=${max_response_length} data.gen_batch_size=${gen_prompt_bsz} data.train_batch_size=${train_prompt_bsz} actor_rollout_ref.rollout.n=${n_resp_per_prompt} algorithm.adv_estimator=${adv_estimator} algorithm.use_kl_in_reward=${use_kl_in_reward} algorithm.kl_ctrl.kl_coef=${kl_coef} actor_rollout_ref.actor.use_kl_loss=${use_kl_loss} actor_rollout_ref.actor.kl_loss_coef=${kl_loss_coef} actor_rollout_ref.actor.clip_ratio_low=${clip_ratio_low} actor_rollout_ref.actor.clip_ratio_high=${clip_ratio_high} actor_rollout_ref.actor.clip_ratio_c=10.0 algorithm.filter_groups.enable=${enable_filter_groups} algorithm.filter_groups.max_num_gen_batches=${max_num_gen_batches} algorithm.filter_groups.metric=${filter_groups_metric} actor_rollout_ref.model.use_remove_padding=True actor_rollout_ref.actor.use_dynamic_bsz=${use_dynamic_bsz} actor_rollout_ref.ref.log_prob_use_dynamic_bsz=${use_dynamic_bsz} actor_rollout_ref.rollout.log_prob_use_dynamic_bsz=${use_dynamic_bsz} actor_rollout_ref.actor.ppo_max_token_len_per_gpu=${actor_ppo_max_token_len} actor_rollout_ref.ref.log_prob_max_token_len_per_gpu=${infer_ppo_max_token_len} actor_rollout_ref.rollout.log_prob_max_token_len_per_gpu=${infer_ppo_max_token_len} actor_rollout_ref.model.path="${MODEL_PATH}" actor_rollout_ref.model.enable_gradient_checkpointing=True actor_rollout_ref.actor.optim.lr=1e-6 actor_rollout_ref.actor.optim.lr_warmup_steps=10 actor_rollout_ref.actor.optim.weight_decay=0.1 actor_rollout_ref.actor.ppo_mini_batch_size=${train_prompt_mini_bsz} actor_rollout_ref.actor.fsdp_config.param_offload=${offload} actor_rollout_ref.actor.fsdp_config.optimizer_offload=${offload} actor_rollout_ref.actor.entropy_coeff=0 actor_rollout_ref.actor.grad_clip=1.0 actor_rollout_ref.actor.loss_agg_mode=${loss_agg_mode} actor_rollout_ref.actor.ulysses_sequence_parallel_size=${sp_size} actor_rollout_ref.rollout.gpu_memory_utilization=0.80 actor_rollout_ref.rollout.tensor_model_parallel_size=${gen_tp} actor_rollout_ref.rollout.enable_chunked_prefill=True actor_rollout_ref.rollout.max_num_batched_tokens=$((max_prompt_length + max_response_length)) actor_rollout_ref.rollout.temperature=${temperature} actor_rollout_ref.rollout.top_p=${top_p} actor_rollout_ref.rollout.top_k="${top_k}" actor_rollout_ref.rollout.val_kwargs.temperature=${temperature} actor_rollout_ref.rollout.val_kwargs.top_p=${val_top_p} actor_rollout_ref.rollout.val_kwargs.top_k=${top_k} actor_rollout_ref.rollout.val_kwargs.do_sample=True actor_rollout_ref.rollout.val_kwargs.n=1 actor_rollout_ref.rollout.name=vllm actor_rollout_ref.ref.fsdp_config.param_offload=${offload} actor_rollout_ref.ref.ulysses_sequence_parallel_size=${sp_size} actor_rollout_ref.actor.fsdp_config.fsdp_size=-1 reward_model.reward_manager=dapo reward_model.overlong_buffer.enable=${enable_overlong_buffer} reward_model.overlong_buffer.len=${overlong_buffer_len} reward_model.overlong_buffer.penalty_factor=${overlong_penalty_factor} trainer.logger='["console","wandb"]' trainer.project_name="${project_name}" trainer.experiment_name="${exp_name}" trainer.n_gpus_per_node=8 trainer.nnodes="${NNODES}" trainer.val_before_train=True trainer.test_freq=10 trainer.save_freq=10 trainer.total_epochs=10 trainer.default_local_dir="${CKPTS_DIR}" trainer.resume_mode=auto

@@ -1,0 +1,110 @@
+{
+  "os": "Linux-5.15.0-119-generic-x86_64-with-glibc2.35",
+  "python": "CPython 3.10.12",
+  "startedAt": "2025-08-03T09:54:04.875187Z",
+  "args": [
+    "--node-ip-address=192.168.139.117",
+    "--node-manager-port=35933",
+    "--object-store-name=/tmp/ray/session_2025-08-03_17-51-29_801179_2883381/sockets/plasma_store",
+    "--raylet-name=/tmp/ray/session_2025-08-03_17-51-29_801179_2883381/sockets/raylet",
+    "--redis-address=None",
+    "--metrics-agent-port=59468",
+    "--logging-rotate-bytes=536870912",
+    "--logging-rotate-backup-count=5",
+    "--runtime-env-agent-port=56785",
+    "--gcs-address=192.168.139.117:44992",
+    "--session-name=session_2025-08-03_17-51-29_801179_2883381",
+    "--temp-dir=/tmp/ray",
+    "--webui=127.0.0.1:8265",
+    "--cluster-id=7a92d7918463d97282d551b6201632176a5a826436023b14f5f06892",
+    "--startup-token=20",
+    "--worker-launch-time-ms=1754214692876",
+    "--node-id=1bcad3dd19476ed6b17e1676f36e4948f8310fceac3a097f702cb75c",
+    "--runtime-env-hash=-2054348966",
+    "--enable-resource-isolation=false"
+  ],
+  "program": "/usr/local/lib/python3.10/dist-packages/ray/_private/workers/default_worker.py",
+  "git": {
+    "remote": "https://github.com/volcengine/verl.git",
+    "commit": "67187c4fd46189a85a4d6f2cde8ab5d261614993"
+  },
+  "root": "/gemini/user/private/table_reasoning/zhaiyanbo/verl",
+  "host": "c9b4e48bcef9567f98037c541e0f5862-taskrole1-0",
+  "executable": "/usr/bin/python3",
+  "cpu_count": 96,
+  "cpu_count_logical": 192,
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "gpu_count": 8,
+  "disk": {
+    "/": {
+      "total": "6440313946112",
+      "used": "1023602257920"
+    }
+  },
+  "memory": {
+    "total": "2164162830336"
+  },
+  "cpu": {
+    "count": 96,
+    "countLogical": 192
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA H100 80GB HBM3",
+      "memoryTotal": "85520809984",
+      "cudaCores": 16896,
+      "architecture": "Hopper",
+      "uuid": "GPU-9d05535e-882e-3d11-02a9-e91c5dbfb36e"
+    },
+    {
+      "name": "NVIDIA H100 80GB HBM3",
+      "memoryTotal": "85520809984",
+      "cudaCores": 16896,
+      "architecture": "Hopper",
+      "uuid": "GPU-e342df25-c64d-0175-ec6d-76cc797a3939"
+    },
+    {
+      "name": "NVIDIA H100 80GB HBM3",
+      "memoryTotal": "85520809984",
+      "cudaCores": 16896,
+      "architecture": "Hopper",
+      "uuid": "GPU-b58c2d7f-3e57-5394-2543-a7ffcc1889cb"
+    },
+    {
+      "name": "NVIDIA H100 80GB HBM3",
+      "memoryTotal": "85520809984",
+      "cudaCores": 16896,
+      "architecture": "Hopper",
+      "uuid": "GPU-d24408ed-7024-5dab-c096-c479b1a5c15b"
+    },
+    {
+      "name": "NVIDIA H100 80GB HBM3",
+      "memoryTotal": "85520809984",
+      "cudaCores": 16896,
+      "architecture": "Hopper",
+      "uuid": "GPU-8971f71d-3070-4894-d126-7dc06f4385fe"
+    },
+    {
+      "name": "NVIDIA H100 80GB HBM3",
+      "memoryTotal": "85520809984",
+      "cudaCores": 16896,
+      "architecture": "Hopper",
+      "uuid": "GPU-b6347364-5205-788d-827c-645b37a6b05c"
+    },
+    {
+      "name": "NVIDIA H100 80GB HBM3",
+      "memoryTotal": "85520809984",
+      "cudaCores": 16896,
+      "architecture": "Hopper",
+      "uuid": "GPU-78c3ca6a-b8aa-af4b-bf58-c8df69256485"
+    },
+    {
+      "name": "NVIDIA H100 80GB HBM3",
+      "memoryTotal": "85520809984",
+      "cudaCores": 16896,
+      "architecture": "Hopper",
+      "uuid": "GPU-a78530c0-2d5c-0d19-7099-42514fbf5623"
+    }
+  ],
+  "cudaVersion": "12.6"
+}

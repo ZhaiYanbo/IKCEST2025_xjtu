@@ -1,0 +1,8 @@
+{"time":"2025-08-04T10:39:53.247307559+08:00","level":"INFO","msg":"stream: starting","core version":"0.20.1","symlink path":"/gemini/user/private/table_reasoning/zhaiyanbo/verl/wandb/offline-run-20250804_103952-ego3oit1/logs/debug-core.log"}
+{"time":"2025-08-04T10:39:53.458730387+08:00","level":"WARN","msg":"GraphQL client is nil, skipping feature loading"}
+{"time":"2025-08-04T10:39:53.458896904+08:00","level":"INFO","msg":"stream: created new stream","id":"ego3oit1"}
+{"time":"2025-08-04T10:39:53.458957905+08:00","level":"INFO","msg":"stream: started","id":"ego3oit1"}
+{"time":"2025-08-04T10:39:53.458967542+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"ego3oit1"}
+{"time":"2025-08-04T10:39:53.458974469+08:00","level":"INFO","msg":"handler: started","stream_id":"ego3oit1"}
+{"time":"2025-08-04T10:39:53.458983654+08:00","level":"INFO","msg":"sender: started","stream_id":"ego3oit1"}
+{"time":"2025-08-04T10:39:53.467356189+08:00","level":"INFO","msg":"Starting system monitor"}

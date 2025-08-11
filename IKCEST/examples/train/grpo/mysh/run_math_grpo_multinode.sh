@@ -1,0 +1,38 @@
+nohup \
+torchrun --nproc_per_node=8 \
+  --master_port=12345 \
+  -m swift.cli.rlhf \
+  --rlhf_type grpo \
+  --model /gemini/user/private/table_reasoning/zhaiyanbo/math/submission/Qwen/Qwen2.5-VL-3B-Instruct \
+  --external_plugins examples/train/grpo/plugin/plugin.py \
+  --reward_funcs external_physics_reward external_physics_format external_physics_float6 \
+  --train_type full \
+  --lora_rank 8 \
+  --lora_alpha 32 \
+  --target_modules all-linear \
+  --torch_dtype bfloat16 \
+  --dataset dataset_grpo/grpo.jsonl \
+  --val_dataset dataset_grpo/grpo_val.jsonl \
+  --max_completion_length 1024 \
+  --max_length 4096 \
+  --num_train_epochs 5 \
+  --per_device_train_batch_size 2 \
+  --per_device_eval_batch_size 2 \
+  --gradient_accumulation_steps 8 \
+  --learning_rate 5e-6 \
+  --eval_steps 200 \
+  --save_steps 200 \
+  --save_total_limit 2 \
+  --logging_steps 5 \
+  --output_dir output \
+  --lr_scheduler_type cosine \
+  --warmup_ratio 0.1 \
+  --dataloader_num_workers 4 \
+  --dataset_num_proc 4 \
+  --num_generations 8 \
+  --temperature 0.7 \
+  --beta 0.04 \
+  --remove_unused_columns false \
+  --log_completions true \
+  --gradient_checkpointing True \
+  > ./log/grpo_ddp_0729_continue.log 2>&1 &

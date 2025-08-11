@@ -1,0 +1,2 @@
+# ${conda_path}/envs/pytorch-env/bin/python run.py $IMAGE_INPUT_DIR $QUERY_PATH $OUPUT_PATH
+python run_new.py '/gemini/user/private/table_reasoning/zhaiyanbo/verl/IKCEST/test/sample_output' '/gemini/user/private/table_reasoning/zhaiyanbo/verl/IKCEST/test/sample_output/test.jsonl' './output/dapo_result_0809.jsonl'

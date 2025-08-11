@@ -1,0 +1,33 @@
+CUDA_VISIBLE_DEVICES=0 nohup \
+swift rlhf \
+    --rlhf_type grpo \
+    --model /gemini/user/private/table_reasoning/zhaiyanbo/math/ms-swift-main/output/v4-20250726-132653/checkpoint-1890 \
+    --external_plugins examples/train/grpo/plugin/plugin.py \
+    --reward_funcs external_physics_reward external_physics_format \
+    --train_type full \
+    --lora_rank 8 \
+    --lora_alpha 32 \
+    --target_modules all-linear \
+    --torch_dtype bfloat16 \
+    --dataset dataset/grpo.jsonl \
+    --max_completion_length 4096 \
+    --num_train_epochs 5 \
+    --per_device_train_batch_size 8 \
+    --per_device_eval_batch_size 8 \
+    --learning_rate 5e-6 \
+    --gradient_accumulation_steps 1 \
+    --eval_steps 100 \
+    --save_steps 100 \
+    --save_total_limit 2 \
+    --logging_steps 5 \
+    --max_length 8192 \
+    --output_dir output \
+    --lr_scheduler_type cosine \
+    --warmup_ratio 0.1 \
+    --dataloader_num_workers 4 \
+    --dataset_num_proc 4 \
+    --num_generations 8 \
+    --temperature 0.7 \
+    --beta 0.04 \
+    --system '' \
+    --log_completions true > ./log/grpo.log 2>&1 &
